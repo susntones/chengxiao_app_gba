@@ -1,0 +1,1311 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08A4F2D24491CAB1EC62FEE4 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E497A05CCBBB5104AE78C89 /* InputManager.swift */; };
+		0B4FCB4B7C785F28DAE26095 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B03D7811A986AC9BCEA0857 /* Game.swift */; };
+		1027D90E4555638CD84DB32F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDCA5206006B26B0CEF605C6 /* Assets.xcassets */; };
+		13AB44D56002EBFB6721AECB /* PauseMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2C73D12E3B975B46D2D0F9 /* PauseMenuView.swift */; };
+		2B29160C42204AC18562847B /* SaveStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F46857BA36244B16C3E20 /* SaveStateManager.swift */; };
+		339E00BE2EE81C5E76B0B27B /* VideoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64015C67DC2BFBA600E21AEF /* VideoRenderer.swift */; };
+		416CAD9B3AA78B666FEB6009 /* EmulatorCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7507FB52741FB7699B3B488C /* EmulatorCore.swift */; };
+		49ED105BD922C58366663EA8 /* ControllerOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0071B562C74CC4A4F1FB5653 /* ControllerOverlay.swift */; };
+		5523FD256B525CD8E1DD4F50 /* ios.toolchain.cmake in Resources */ = {isa = PBXBuildFile; fileRef = 6E2965E0EA68441FBEDA51A8 /* ios.toolchain.cmake */; };
+		585350A4E491DD7FA483BE30 /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D72229068990A29EACE8B2 /* RingBuffer.swift */; };
+		58CCF00289BBF8E7A6DFA5A7 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5064C4522776A25D7908184C /* StorageService.swift */; };
+		695F8B51A49A12B08F854096 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348B570AC1989E16FF2F1C6 /* SettingsView.swift */; };
+		737208D13BB058B532EAA415 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD44FAEBFB80C16DD130B71 /* LibraryView.swift */; };
+		83A917CA92E3A12AAFC20E6B /* GamePlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE106A6CC0247209706D2765 /* GamePlayView.swift */; };
+		9A099FDC8D94AAC97E16A05D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 75B22445380C8BE8802062FB /* Shaders.metal */; };
+		A010685FAC46525994E28235 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86D3206A70D5CE551FC497E /* MetalView.swift */; };
+		A2CCEACB8EE63EB52BC10761 /* libmgba.a in Resources */ = {isa = PBXBuildFile; fileRef = 1D5822435DC221B355B0B967 /* libmgba.a */; };
+		A3B9CEE9DA3CB749BC851F3A /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7DB02AF3D2CBABC90564C2 /* HapticsService.swift */; };
+		A748F325731C6762CDC9F970 /* GBAEmulatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6D56BE5C4E5FE45F031778 /* GBAEmulatorApp.swift */; };
+		A9FB3CE969B084F0FFCDC6ED /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6E977C1EC3049DB6EBAB9 /* AudioEngine.swift */; };
+		AAC0E7A377959DD5F0DEF94E /* EmulatorBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9C0FB7DB8EE8B6A75299C201 /* EmulatorBridge.c */; };
+		B08201FEF302035677B15471 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231CF871F7FBBEA06DC915A6 /* AppSettings.swift */; };
+		BA85DED12031A79D75355527 /* build-ios.sh in Resources */ = {isa = PBXBuildFile; fileRef = 649AB2B44D02B9C83E53FF8A /* build-ios.sh */; };
+		E9779A6069D05BB77AFE2EC3 /* RingBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BE26B9C7D04A7DB507BCAB /* RingBufferTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		810B65BE87CCE876D5B30164 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1029434107E567F0686A98DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 38EA2BCCB77D0FB726A728FE;
+			remoteInfo = GBAEmulator;
+		};
+		A8807B8A9FCD5968FEF75E29 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1029434107E567F0686A98DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 38EA2BCCB77D0FB726A728FE;
+			remoteInfo = GBAEmulator;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0071B562C74CC4A4F1FB5653 /* ControllerOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerOverlay.swift; sourceTree = "<group>"; };
+		00BB67A15DF163AB47A004C5 /* menu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = menu.h; sourceTree = "<group>"; };
+		037268E6C2186DCA443318BA /* GBAEmulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GBAEmulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0421662D45AE7383C3DC46D4 /* io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
+		0795ADFA7F914BDCFA5CF478 /* video.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = video.h; sourceTree = "<group>"; };
+		0A8DEFF30E18EBB4EE9C9E1A /* png-io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "png-io.h"; sourceTree = "<group>"; };
+		0B03D7811A986AC9BCEA0857 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		0DBB33F2FD0AEBBB698BA38E /* log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
+		10529EA20E9AF61FAC236CB0 /* emitter-thumb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "emitter-thumb.h"; sourceTree = "<group>"; };
+		10925CD4E67E19A55917143C /* vfame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vfame.h; sourceTree = "<group>"; };
+		10BE26B9C7D04A7DB507BCAB /* RingBufferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBufferTests.swift; sourceTree = "<group>"; };
+		132956D73075DBD6E4D2BEF6 /* emitter-arm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "emitter-arm.h"; sourceTree = "<group>"; };
+		133AB182068770E094EFA44E /* export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = export.h; sourceTree = "<group>"; };
+		1561E0D4862423086E09B3D6 /* video-logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "video-logger.h"; sourceTree = "<group>"; };
+		15B6DE1CB2D4E01E17F5C133 /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		18E12C440A43088E2D7EFA28 /* symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = symbols.h; sourceTree = "<group>"; };
+		1CD359204EEFD736A1A36053 /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
+		1D5822435DC221B355B0B967 /* libmgba.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmgba.a; sourceTree = "<group>"; };
+		1F6D56BE5C4E5FE45F031778 /* GBAEmulatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBAEmulatorApp.swift; sourceTree = "<group>"; };
+		231CF871F7FBBEA06DC915A6 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		240F46857BA36244B16C3E20 /* SaveStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStateManager.swift; sourceTree = "<group>"; };
+		246DAFBDD31D9D245532F661 /* library.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = library.h; sourceTree = "<group>"; };
+		2507A949CF4B321DE5492AF3 /* socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = socket.h; sourceTree = "<group>"; };
+		2659C04383A86F0A4AC546A9 /* rewind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rewind.h; sourceTree = "<group>"; };
+		284D3501BA62CFCDD80472F3 /* patch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = patch.h; sourceTree = "<group>"; };
+		2A59659AB14FA1DE887EFBDC /* bitmap-cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bitmap-cache.h"; sourceTree = "<group>"; };
+		2C1274E3A8036BC63EFA7650 /* threading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
+		2E497A05CCBBB5104AE78C89 /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
+		2E7B4E18A74CB6B96666D0B0 /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		2F1498721C72DC2F9CBC2BEB /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
+		2F2C0818D5A28588C819D71C /* gb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gb.h; sourceTree = "<group>"; };
+		2F716D2669AD0C7A9AF156A5 /* threading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
+		3074810A06EDD113BFA9BBFC /* gba.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gba.h; sourceTree = "<group>"; };
+		3314A44AAE1BFF052D72EEE8 /* audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
+		34A476A654F05BC76D0BE993 /* commandline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commandline.h; sourceTree = "<group>"; };
+		397699E40E2979EC34F96272 /* printer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = printer.h; sourceTree = "<group>"; };
+		3D223E1DB56D56723E542038 /* cache-set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cache-set.h"; sourceTree = "<group>"; };
+		40677A417CEE948C0863C1DD /* cli-debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cli-debugger.h"; sourceTree = "<group>"; };
+		4338970F925279A5B99BE1EA /* timing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timing.h; sourceTree = "<group>"; };
+		45B30A15B78B98C0505FA85E /* savedata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = savedata.h; sourceTree = "<group>"; };
+		469AB284F8097CFCFDCBA8C2 /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
+		46CC7CDBF7744384A28C07AA /* font.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = font.h; sourceTree = "<group>"; };
+		47881799A7E93B15F78746EB /* dllexports.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dllexports.h; sourceTree = "<group>"; };
+		47C745A4489560B5385AA4FC /* input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
+		482FAE8657EE3DB1854095BB /* cli-debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cli-debugger.h"; sourceTree = "<group>"; };
+		4AAF3B382682CB3B0E0BD02B /* cli.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cli.h; sourceTree = "<group>"; };
+		4B2A58164D7DD623D7D2D636 /* thread-proxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "thread-proxy.h"; sourceTree = "<group>"; };
+		4D8DD3C0BEAF4C92FDD346F1 /* hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hash.h; sourceTree = "<group>"; };
+		4DDF1764025A26FF67A88DEE /* mbc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mbc.h; sourceTree = "<group>"; };
+		4F6AF5C1F3CD49930E42B699 /* isa-sm83.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "isa-sm83.h"; sourceTree = "<group>"; };
+		50415E1D196589B89563C8A0 /* memory-debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "memory-debugger.h"; sourceTree = "<group>"; };
+		5064C4522776A25D7908184C /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		5184521E2F746FCF90702371 /* threading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
+		539110F1CC0A1100E05BBC9C /* ring-fifo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ring-fifo.h"; sourceTree = "<group>"; };
+		53A487A57A79EDAB859971C1 /* getopt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = getopt.h; sourceTree = "<group>"; };
+		562E31E2F7EDCB347F5D4A00 /* io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
+		5730A4D101D0B27AA1795AE1 /* threading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
+		575199E97DD7C96330210238 /* video-software.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "video-software.h"; sourceTree = "<group>"; };
+		5A5BC41A2B95DB60B8407D0B /* crc32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32.h; sourceTree = "<group>"; };
+		5A72FF63BD019CFF270394ED /* cheats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cheats.h; sourceTree = "<group>"; };
+		5C873D6AE4C73A4C9C2B61B8 /* circle-buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "circle-buffer.h"; sourceTree = "<group>"; };
+		5ED91C08826B39654994AAB8 /* parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
+		608F46EDEBD3BD356A2B3182 /* memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		6121884727110AEFC2D77949 /* dolphin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dolphin.h; sourceTree = "<group>"; };
+		6182060F0C242E854D66A94C /* isa-inlines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "isa-inlines.h"; sourceTree = "<group>"; };
+		62B283312A3FB5231B8495AC /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		64015C67DC2BFBA600E21AEF /* VideoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRenderer.swift; sourceTree = "<group>"; };
+		649AB2B44D02B9C83E53FF8A /* build-ios.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "build-ios.sh"; sourceTree = "<group>"; };
+		65AA2DE21FAC9E32D0C77077 /* overrides.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = overrides.h; sourceTree = "<group>"; };
+		661C695C7CCC2DE29DA04680 /* audio-mixer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "audio-mixer.h"; sourceTree = "<group>"; };
+		66E38C97EEA1342E7743D9D5 /* sio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sio.h; sourceTree = "<group>"; };
+		678995DB6383799B6FCA4BF3 /* emitter-inlines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "emitter-inlines.h"; sourceTree = "<group>"; };
+		6C448BBADBF1F536D0DD9AE8 /* input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
+		6C8E899A0DAB5BCD343799EB /* video.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = video.h; sourceTree = "<group>"; };
+		6E2965E0EA68441FBEDA51A8 /* ios.toolchain.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = ios.toolchain.cmake; sourceTree = "<group>"; };
+		712DF0A12AA46762E2D28332 /* debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debugger.h; sourceTree = "<group>"; };
+		715ABF084987533589EBCBE5 /* debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debugger.h; sourceTree = "<group>"; };
+		723033B3424A0CFBA09D7703 /* EmulatorBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorBridge.h; sourceTree = "<group>"; };
+		7404B3A0F496115604CF82E6 /* cache-set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cache-set.h"; sourceTree = "<group>"; };
+		7507FB52741FB7699B3B488C /* EmulatorCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorCore.swift; sourceTree = "<group>"; };
+		75B22445380C8BE8802062FB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		779574F28A67C68A26B8D3FF /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		779B23C48CB7F2A224976255 /* socket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = socket.h; sourceTree = "<group>"; };
+		7AD44FAEBFB80C16DD130B71 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		7B088D6ED6852CC16448952B /* input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
+		7B0F29118A6159391F47F153 /* serialize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = serialize.h; sourceTree = "<group>"; };
+		7B7DB02AF3D2CBABC90564C2 /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
+		7C43442211E83AD4B1108450 /* updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = updater.h; sourceTree = "<group>"; };
+		80A881C3233116BB7FA69986 /* matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		85688D35923DA44A1C81DCCE /* file-select.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "file-select.h"; sourceTree = "<group>"; };
+		8584F06048570AEEAB770AB1 /* audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
+		859848AD3296F8755F8FE18F /* memory-debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "memory-debugger.h"; sourceTree = "<group>"; };
+		85B30885623F1429FEDF3334 /* lockstep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lockstep.h; sourceTree = "<group>"; };
+		862CF1442D2752C4CAF209D9 /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		8641BEB794AFBFAE3C6F0F2F /* gdb-stub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gdb-stub.h"; sourceTree = "<group>"; };
+		884BE84556C3FD72401736B5 /* GBAEmulatorTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GBAEmulatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		89716BFDC10A5905780A057E /* lockstep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lockstep.h; sourceTree = "<group>"; };
+		8A69FB4AA0D0E6DEC40B74B4 /* text-codec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "text-codec.h"; sourceTree = "<group>"; };
+		8B1A033467BF1369C5E23AC8 /* cli.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cli.h; sourceTree = "<group>"; };
+		8B2C73D12E3B975B46D2D0F9 /* PauseMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseMenuView.swift; sourceTree = "<group>"; };
+		8B44906DCDE8B935CA2AD173 /* cache-set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cache-set.h"; sourceTree = "<group>"; };
+		8BED1478F9B9CFBEC8617A86 /* GBAEmulator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBAEmulator-Bridging-Header.h"; sourceTree = "<group>"; };
+		8D00EB9665461483DDD54F39 /* version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
+		8DC2BA907EBC35A112E309BE /* serialize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = serialize.h; sourceTree = "<group>"; };
+		8E85EE0BF435DF8C6089CFD9 /* lockstep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lockstep.h; sourceTree = "<group>"; };
+		939D7BCC29926335F3F88501 /* sce-vfs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sce-vfs.h"; sourceTree = "<group>"; };
+		9510A2614ED6F50868861848 /* tile-cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tile-cache.h"; sourceTree = "<group>"; };
+		9676F852170377FA569884E2 /* convolve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = convolve.h; sourceTree = "<group>"; };
+		975FE4B52A517E2033FDB730 /* thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread.h; sourceTree = "<group>"; };
+		98F9C2E872BE486051962D33 /* context.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = context.h; sourceTree = "<group>"; };
+		9AD7A7D105FC84A863E77077 /* debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debugger.h; sourceTree = "<group>"; };
+		9BF4E2CDB0B1F956D79CFDB4 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		9C0FB7DB8EE8B6A75299C201 /* EmulatorBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = EmulatorBridge.c; sourceTree = "<group>"; };
+		9D6619E9E75F6A483C44DCDB /* vfs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vfs.h; sourceTree = "<group>"; };
+		9DC6E977C1EC3049DB6EBAB9 /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		9E8A5643FE33A02E3530E65E /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		A1625542CF894FD963E74A4E /* cpu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpu.h; sourceTree = "<group>"; };
+		A20B40E95D9E66A54977EC71 /* isa-thumb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "isa-thumb.h"; sourceTree = "<group>"; };
+		A23460A75E3409AF2BB37CDF /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
+		A3565462FD1D7A7E0D6C31B5 /* sync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sync.h; sourceTree = "<group>"; };
+		A7850D2DD090F91798163E6C /* emitter-sm83.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "emitter-sm83.h"; sourceTree = "<group>"; };
+		A8D00707B8F35E85BBAD75BB /* isa-arm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "isa-arm.h"; sourceTree = "<group>"; };
+		A8E003B786238BCB6F821906 /* gl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gl.h; sourceTree = "<group>"; };
+		B03125FE72D3C04D0E8A5030 /* fast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fast.h; sourceTree = "<group>"; };
+		B2D44F183A6529ED78517A85 /* cli-debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cli-debugger.h"; sourceTree = "<group>"; };
+		B86D3206A70D5CE551FC497E /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		B9EBCA7783D015C8DFBF53ED /* map-cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "map-cache.h"; sourceTree = "<group>"; };
+		BB8392533EC533C89434843C /* software.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = software.h; sourceTree = "<group>"; };
+		BC25EC5A84B67C0763E49F62 /* threading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
+		BC782D1CF5DF4764FF1A0D44 /* vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
+		BCED9FFC3BDAAE1E12E329A6 /* debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debugger.h; sourceTree = "<group>"; };
+		BE25651C405D0F6296A403F8 /* elf-read.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "elf-read.h"; sourceTree = "<group>"; };
+		BF00474CD050DFB67FBB51EC /* formatting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = formatting.h; sourceTree = "<group>"; };
+		BF279E6F86A0599726C0539F /* GBAEmulatorUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GBAEmulatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF75DB70ADB08595A37900A8 /* dma.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dma.h; sourceTree = "<group>"; };
+		C2FA27343D4E8996BE517775 /* sharkport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sharkport.h; sourceTree = "<group>"; };
+		C348B570AC1989E16FF2F1C6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C50FC43CD0482EB7E5C79BB7 /* memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		C8EF460BF877FC429E283F81 /* scripting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scripting.h; sourceTree = "<group>"; };
+		C9675721B4BA9A700220C173 /* mem-search.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mem-search.h"; sourceTree = "<group>"; };
+		C9836A3D5079BC3AE89A2BB0 /* directories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = directories.h; sourceTree = "<group>"; };
+		CB313260A6740A96CDC50DC4 /* flags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = flags.h; sourceTree = "<group>"; };
+		CC6ACD14D7F75CDFC48F1B8C /* ips.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ips.h; sourceTree = "<group>"; };
+		CCD57DE6BB39B3B342E39E0F /* string.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
+		CE106A6CC0247209706D2765 /* GamePlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlayView.swift; sourceTree = "<group>"; };
+		CE3F304DEC3A963D17381F2D /* ereader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ereader.h; sourceTree = "<group>"; };
+		CEE8B4EB7FA405A7E8251048 /* sio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sio.h; sourceTree = "<group>"; };
+		D0D72229068990A29EACE8B2 /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
+		D2376AD417795295783D3BF5 /* gui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
+		D4485395B4569DB51D626D1F /* memory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		D5A325F472C75644962EBD11 /* arm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arm.h; sourceTree = "<group>"; };
+		D74FFCE782871E5765788891 /* lua.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
+		D7652E65E2702424657631D2 /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
+		D95CFF8877E5DE4476AEC9BE /* overrides.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = overrides.h; sourceTree = "<group>"; };
+		D9A555BE493944319A28D3CB /* cheats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cheats.h; sourceTree = "<group>"; };
+		DAB85A0FF9012DC5FD3099DF /* gbp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gbp.h; sourceTree = "<group>"; };
+		DB8C61085C3D8E31667B4258 /* math.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
+		E0573D45F202779CADE81167 /* blip_buf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = blip_buf.h; sourceTree = "<group>"; };
+		E2410439E159667313B693EE /* decoder-inlines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "decoder-inlines.h"; sourceTree = "<group>"; };
+		E3B52681623FDBC48DE4AD2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E4734253FCA74897D0DD6E01 /* font-metrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "font-metrics.h"; sourceTree = "<group>"; };
+		E4AE26CA2E055F31BD9E7ADA /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		E5BE417C9B2446D61D8A4B49 /* configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = configuration.h; sourceTree = "<group>"; };
+		E5CFCDC3B410F2F59D99EC73 /* serialize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = serialize.h; sourceTree = "<group>"; };
+		E697AAF47F549269DF656AE7 /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		E6F4025F53F4B0BC763BC5CB /* stack-trace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "stack-trace.h"; sourceTree = "<group>"; };
+		E9E80D433AA10027281D74A7 /* cheats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cheats.h; sourceTree = "<group>"; };
+		EAA205E4C7305209EC0AD592 /* sm83.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sm83.h; sourceTree = "<group>"; };
+		EAEF56CEDC4FA99DC43780D6 /* table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = table.h; sourceTree = "<group>"; };
+		ED3D19157DF3CCD6F084CC9C /* gpio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gpio.h; sourceTree = "<group>"; };
+		EDCA5206006B26B0CEF605C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F27CC1DE8AE179BF8A7C9413 /* symbols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = symbols.h; sourceTree = "<group>"; };
+		F6E1E129786391AD2ABC9B32 /* proxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = proxy.h; sourceTree = "<group>"; };
+		F7D39C6B142A0C0FEB5B58C6 /* decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = decoder.h; sourceTree = "<group>"; };
+		F890EEB710C969941DF45F9F /* ups.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ups.h; sourceTree = "<group>"; };
+		F93A29142069B08C7C620F60 /* decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = decoder.h; sourceTree = "<group>"; };
+		F982D46B4E63A230D67862FB /* bios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bios.h; sourceTree = "<group>"; };
+		F9C30DD792307D2B34D6D3F1 /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		FA904FF9B170719B1F4DE64F /* threading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
+		FCDC0177D13A5A72AD0BD9F9 /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		FE7F192EEE0F16DE81A3BB31 /* 3ds-vfs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "3ds-vfs.h"; sourceTree = "<group>"; };
+		FEAC8B58BA2FAE6492A84F78 /* proxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = proxy.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		012B63137EC3CE0F5DB285BB /* renderers */ = {
+			isa = PBXGroup;
+			children = (
+				3D223E1DB56D56723E542038 /* cache-set.h */,
+				779574F28A67C68A26B8D3FF /* common.h */,
+				A8E003B786238BCB6F821906 /* gl.h */,
+				F6E1E129786391AD2ABC9B32 /* proxy.h */,
+				575199E97DD7C96330210238 /* video-software.h */,
+			);
+			path = renderers;
+			sourceTree = "<group>";
+		};
+		18F5F44DCF8A47DF2E1261FA /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				63776CA2DD352C46A4DC6CA0 /* GamePlay */,
+				304FB671678E279A4D409FA0 /* Library */,
+				5D6C7E87F6CF2F7F656F0551 /* Settings */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		1A3FC7EE0EAD94E5AC000376 /* mGBA */ = {
+			isa = PBXGroup;
+			children = (
+				649AB2B44D02B9C83E53FF8A /* build-ios.sh */,
+				6E2965E0EA68441FBEDA51A8 /* ios.toolchain.cmake */,
+				2B1B0043653AF1E17DE4B506 /* include */,
+				E8B973BBBD79BEB9B46BA300 /* lib */,
+			);
+			path = mGBA;
+			sourceTree = "<group>";
+		};
+		1CD2ED86578D789B416FD74C /* extra */ = {
+			isa = PBXGroup;
+			children = (
+				8B1A033467BF1369C5E23AC8 /* cli.h */,
+			);
+			path = extra;
+			sourceTree = "<group>";
+		};
+		1D0B46A3B192E047735ADB0F /* script */ = {
+			isa = PBXGroup;
+			children = (
+				98F9C2E872BE486051962D33 /* context.h */,
+				2E7B4E18A74CB6B96666D0B0 /* macros.h */,
+				E697AAF47F549269DF656AE7 /* types.h */,
+			);
+			path = script;
+			sourceTree = "<group>";
+		};
+		244E12AA446DF1B4BB0B4AAC /* GBAEmulatorUITests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GBAEmulatorUITests;
+			sourceTree = "<group>";
+		};
+		26185E112BA409ADAFE349F7 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				EA304B56816209D02A5A10C2 /* Emulator */,
+				D25942E58785AB19543DC16D /* Input */,
+				78F8D3744C185100B2B3D54E /* SaveState */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		2B1B0043653AF1E17DE4B506 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				FC93E12551AB0C52C3C306F3 /* mgba */,
+				F34ED3533FFE4174A56A98AC /* mgba-util */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		304FB671678E279A4D409FA0 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				7AD44FAEBFB80C16DD130B71 /* LibraryView.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		30AA400F91D6BBA9291543B7 /* gui */ = {
+			isa = PBXGroup;
+			children = (
+				85688D35923DA44A1C81DCCE /* file-select.h */,
+				E4734253FCA74897D0DD6E01 /* font-metrics.h */,
+				46CC7CDBF7744384A28C07AA /* font.h */,
+				00BB67A15DF163AB47A004C5 /* menu.h */,
+			);
+			path = gui;
+			sourceTree = "<group>";
+		};
+		32A88F4F96B1303F6439070F /* GBAEmulatorTests */ = {
+			isa = PBXGroup;
+			children = (
+				10BE26B9C7D04A7DB507BCAB /* RingBufferTests.swift */,
+			);
+			path = GBAEmulatorTests;
+			sourceTree = "<group>";
+		};
+		37F96CAE574483D55890DB42 /* renderers */ = {
+			isa = PBXGroup;
+			children = (
+				7404B3A0F496115604CF82E6 /* cache-set.h */,
+				FEAC8B58BA2FAE6492A84F78 /* proxy.h */,
+				BB8392533EC533C89434843C /* software.h */,
+			);
+			path = renderers;
+			sourceTree = "<group>";
+		};
+		41F8A78ADC1711F1343BAE4D /* debugger */ = {
+			isa = PBXGroup;
+			children = (
+				40677A417CEE948C0863C1DD /* cli-debugger.h */,
+				712DF0A12AA46762E2D28332 /* debugger.h */,
+				50415E1D196589B89563C8A0 /* memory-debugger.h */,
+			);
+			path = debugger;
+			sourceTree = "<group>";
+		};
+		43F0F16FB252EB48992EA4DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				037268E6C2186DCA443318BA /* GBAEmulator.app */,
+				884BE84556C3FD72401736B5 /* GBAEmulatorTests.xctest */,
+				BF279E6F86A0599726C0539F /* GBAEmulatorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4BC2DF49E8E88BD9EB7E8655 /* debugger */ = {
+			isa = PBXGroup;
+			children = (
+				B2D44F183A6529ED78517A85 /* cli-debugger.h */,
+				715ABF084987533589EBCBE5 /* debugger.h */,
+				859848AD3296F8755F8FE18F /* memory-debugger.h */,
+			);
+			path = debugger;
+			sourceTree = "<group>";
+		};
+		564DF9A634E38B56563A2ADA /* platform */ = {
+			isa = PBXGroup;
+			children = (
+				B5C01103D3EDCEA1C7A4D6F8 /* 3ds */,
+				BC39D2ED20F8A4F78E0FE726 /* posix */,
+				ADFD346997F5E5E9D59C9A06 /* psp2 */,
+				E958A6D416B30319F2AA3F84 /* switch */,
+				8FA524563DDA33B5153C6BB8 /* windows */,
+			);
+			path = platform;
+			sourceTree = "<group>";
+		};
+		5B224E9A2139CB3B53465F68 /* gba */ = {
+			isa = PBXGroup;
+			children = (
+				8584F06048570AEEAB770AB1 /* audio.h */,
+				F982D46B4E63A230D67862FB /* bios.h */,
+				D9A555BE493944319A28D3CB /* cheats.h */,
+				BF75DB70ADB08595A37900A8 /* dma.h */,
+				3074810A06EDD113BFA9BBFC /* gba.h */,
+				47C745A4489560B5385AA4FC /* input.h */,
+				562E31E2F7EDCB347F5D4A00 /* io.h */,
+				D4485395B4569DB51D626D1F /* memory.h */,
+				65AA2DE21FAC9E32D0C77077 /* overrides.h */,
+				45B30A15B78B98C0505FA85E /* savedata.h */,
+				E5CFCDC3B410F2F59D99EC73 /* serialize.h */,
+				C2FA27343D4E8996BE517775 /* sharkport.h */,
+				66E38C97EEA1342E7743D9D5 /* sio.h */,
+				A23460A75E3409AF2BB37CDF /* timer.h */,
+				6C8E899A0DAB5BCD343799EB /* video.h */,
+				DE87E964303A446D8B6DDB55 /* cart */,
+				7D4FAE61C36163471319A0ED /* extra */,
+				012B63137EC3CE0F5DB285BB /* renderers */,
+				A1C5A4F5526FF7B7A5BD9F71 /* sio */,
+			);
+			path = gba;
+			sourceTree = "<group>";
+		};
+		5D6C7E87F6CF2F7F656F0551 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C348B570AC1989E16FF2F1C6 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		5EE43965CE989FC686531224 /* GBAEmulator */ = {
+			isa = PBXGroup;
+			children = (
+				1F6D56BE5C4E5FE45F031778 /* GBAEmulatorApp.swift */,
+				E3B52681623FDBC48DE4AD2A /* Info.plist */,
+				26185E112BA409ADAFE349F7 /* Core */,
+				18F5F44DCF8A47DF2E1261FA /* Features */,
+				1A3FC7EE0EAD94E5AC000376 /* mGBA */,
+				DF6F2EC677304C28F81B1C7E /* Models */,
+				8F90F1D648BD126AED863D62 /* Resources */,
+				E1CF8FF74C0A449F40B6EEBC /* Services */,
+			);
+			path = GBAEmulator;
+			sourceTree = "<group>";
+		};
+		5FB23DEF3A6E4D5B65B1F619 /* feature */ = {
+			isa = PBXGroup;
+			children = (
+				34A476A654F05BC76D0BE993 /* commandline.h */,
+				4B2A58164D7DD623D7D2D636 /* thread-proxy.h */,
+				7C43442211E83AD4B1108450 /* updater.h */,
+				1561E0D4862423086E09B3D6 /* video-logger.h */,
+			);
+			path = feature;
+			sourceTree = "<group>";
+		};
+		612A43DA09168F3A873700BF /* gb */ = {
+			isa = PBXGroup;
+			children = (
+				3314A44AAE1BFF052D72EEE8 /* audio.h */,
+				E9E80D433AA10027281D74A7 /* cheats.h */,
+				2F2C0818D5A28588C819D71C /* gb.h */,
+				7B088D6ED6852CC16448952B /* input.h */,
+				0421662D45AE7383C3DC46D4 /* io.h */,
+				4DDF1764025A26FF67A88DEE /* mbc.h */,
+				608F46EDEBD3BD356A2B3182 /* memory.h */,
+				D95CFF8877E5DE4476AEC9BE /* overrides.h */,
+				8DC2BA907EBC35A112E309BE /* serialize.h */,
+				CEE8B4EB7FA405A7E8251048 /* sio.h */,
+				D7652E65E2702424657631D2 /* timer.h */,
+				0795ADFA7F914BDCFA5CF478 /* video.h */,
+				8DB698467EFDCB8A8DA24BBC /* debugger */,
+				1CD2ED86578D789B416FD74C /* extra */,
+				37F96CAE574483D55890DB42 /* renderers */,
+				98FBD6EF5CE29E8CDEE67026 /* sio */,
+			);
+			path = gb;
+			sourceTree = "<group>";
+		};
+		63776CA2DD352C46A4DC6CA0 /* GamePlay */ = {
+			isa = PBXGroup;
+			children = (
+				0071B562C74CC4A4F1FB5653 /* ControllerOverlay.swift */,
+				CE106A6CC0247209706D2765 /* GamePlayView.swift */,
+				8B2C73D12E3B975B46D2D0F9 /* PauseMenuView.swift */,
+			);
+			path = GamePlay;
+			sourceTree = "<group>";
+		};
+		78F8D3744C185100B2B3D54E /* SaveState */ = {
+			isa = PBXGroup;
+			children = (
+				240F46857BA36244B16C3E20 /* SaveStateManager.swift */,
+			);
+			path = SaveState;
+			sourceTree = "<group>";
+		};
+		7D4FAE61C36163471319A0ED /* extra */ = {
+			isa = PBXGroup;
+			children = (
+				661C695C7CCC2DE29DA04680 /* audio-mixer.h */,
+				4AAF3B382682CB3B0E0BD02B /* cli.h */,
+			);
+			path = extra;
+			sourceTree = "<group>";
+		};
+		8DB698467EFDCB8A8DA24BBC /* debugger */ = {
+			isa = PBXGroup;
+			children = (
+				9AD7A7D105FC84A863E77077 /* debugger.h */,
+				18E12C440A43088E2D7EFA28 /* symbols.h */,
+			);
+			path = debugger;
+			sourceTree = "<group>";
+		};
+		8F90F1D648BD126AED863D62 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EDCA5206006B26B0CEF605C6 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8FA524563DDA33B5153C6BB8 /* windows */ = {
+			isa = PBXGroup;
+			children = (
+				53A487A57A79EDAB859971C1 /* getopt.h */,
+				2F716D2669AD0C7A9AF156A5 /* threading.h */,
+			);
+			path = windows;
+			sourceTree = "<group>";
+		};
+		98FBD6EF5CE29E8CDEE67026 /* sio */ = {
+			isa = PBXGroup;
+			children = (
+				8E85EE0BF435DF8C6089CFD9 /* lockstep.h */,
+				397699E40E2979EC34F96272 /* printer.h */,
+			);
+			path = sio;
+			sourceTree = "<group>";
+		};
+		A1C5A4F5526FF7B7A5BD9F71 /* sio */ = {
+			isa = PBXGroup;
+			children = (
+				6121884727110AEFC2D77949 /* dolphin.h */,
+				DAB85A0FF9012DC5FD3099DF /* gbp.h */,
+				85B30885623F1429FEDF3334 /* lockstep.h */,
+			);
+			path = sio;
+			sourceTree = "<group>";
+		};
+		A858F91E3C4CC2F325A9212E /* gba */ = {
+			isa = PBXGroup;
+			children = (
+				1CD359204EEFD736A1A36053 /* core.h */,
+				62B283312A3FB5231B8495AC /* interface.h */,
+			);
+			path = gba;
+			sourceTree = "<group>";
+		};
+		AA4FDB66E60B9B670B7BBA86 /* script */ = {
+			isa = PBXGroup;
+			children = (
+				D74FFCE782871E5765788891 /* lua.h */,
+				2507A949CF4B321DE5492AF3 /* socket.h */,
+			);
+			path = script;
+			sourceTree = "<group>";
+		};
+		AD4A8BBC3F2DB6D75C38FEBA /* patch */ = {
+			isa = PBXGroup;
+			children = (
+				B03125FE72D3C04D0E8A5030 /* fast.h */,
+				CC6ACD14D7F75CDFC48F1B8C /* ips.h */,
+				F890EEB710C969941DF45F9F /* ups.h */,
+			);
+			path = patch;
+			sourceTree = "<group>";
+		};
+		ADFD346997F5E5E9D59C9A06 /* psp2 */ = {
+			isa = PBXGroup;
+			children = (
+				939D7BCC29926335F3F88501 /* sce-vfs.h */,
+				FA904FF9B170719B1F4DE64F /* threading.h */,
+			);
+			path = psp2;
+			sourceTree = "<group>";
+		};
+		B4B6278DB11DBAD39D5804F7 = {
+			isa = PBXGroup;
+			children = (
+				5EE43965CE989FC686531224 /* GBAEmulator */,
+				32A88F4F96B1303F6439070F /* GBAEmulatorTests */,
+				244E12AA446DF1B4BB0B4AAC /* GBAEmulatorUITests */,
+				43F0F16FB252EB48992EA4DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B5816B1BF83C220063A6DF20 /* sm83 */ = {
+			isa = PBXGroup;
+			children = (
+				F93A29142069B08C7C620F60 /* decoder.h */,
+				A7850D2DD090F91798163E6C /* emitter-sm83.h */,
+				4F6AF5C1F3CD49930E42B699 /* isa-sm83.h */,
+				EAA205E4C7305209EC0AD592 /* sm83.h */,
+				41F8A78ADC1711F1343BAE4D /* debugger */,
+			);
+			path = sm83;
+			sourceTree = "<group>";
+		};
+		B592F15FF2799B531C1AEE97 /* debugger */ = {
+			isa = PBXGroup;
+			children = (
+				482FAE8657EE3DB1854095BB /* cli-debugger.h */,
+				8641BEB794AFBFAE3C6F0F2F /* gdb-stub.h */,
+				5ED91C08826B39654994AAB8 /* parser.h */,
+				E6F4025F53F4B0BC763BC5CB /* stack-trace.h */,
+				F27CC1DE8AE179BF8A7C9413 /* symbols.h */,
+			);
+			path = debugger;
+			sourceTree = "<group>";
+		};
+		B5C01103D3EDCEA1C7A4D6F8 /* 3ds */ = {
+			isa = PBXGroup;
+			children = (
+				FE7F192EEE0F16DE81A3BB31 /* 3ds-vfs.h */,
+				2C1274E3A8036BC63EFA7650 /* threading.h */,
+			);
+			path = 3ds;
+			sourceTree = "<group>";
+		};
+		BC39D2ED20F8A4F78E0FE726 /* posix */ = {
+			isa = PBXGroup;
+			children = (
+				5184521E2F746FCF90702371 /* threading.h */,
+			);
+			path = posix;
+			sourceTree = "<group>";
+		};
+		C1F9BC7C1FFE46692EE9348B /* arm */ = {
+			isa = PBXGroup;
+			children = (
+				D5A325F472C75644962EBD11 /* arm.h */,
+				E2410439E159667313B693EE /* decoder-inlines.h */,
+				F7D39C6B142A0C0FEB5B58C6 /* decoder.h */,
+				132956D73075DBD6E4D2BEF6 /* emitter-arm.h */,
+				678995DB6383799B6FCA4BF3 /* emitter-inlines.h */,
+				10529EA20E9AF61FAC236CB0 /* emitter-thumb.h */,
+				A8D00707B8F35E85BBAD75BB /* isa-arm.h */,
+				6182060F0C242E854D66A94C /* isa-inlines.h */,
+				A20B40E95D9E66A54977EC71 /* isa-thumb.h */,
+				862CF1442D2752C4CAF209D9 /* macros.h */,
+				4BC2DF49E8E88BD9EB7E8655 /* debugger */,
+			);
+			path = arm;
+			sourceTree = "<group>";
+		};
+		C4A7FAEBC8C0DD310C025DB6 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				9BF4E2CDB0B1F956D79CFDB4 /* defines.h */,
+				C1F9BC7C1FFE46692EE9348B /* arm */,
+				B592F15FF2799B531C1AEE97 /* debugger */,
+				612A43DA09168F3A873700BF /* gb */,
+				5B224E9A2139CB3B53465F68 /* gba */,
+				AA4FDB66E60B9B670B7BBA86 /* script */,
+				B5816B1BF83C220063A6DF20 /* sm83 */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		D25942E58785AB19543DC16D /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				2E497A05CCBBB5104AE78C89 /* InputManager.swift */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		D3514A39E9245CF579D8F16E /* core */ = {
+			isa = PBXGroup;
+			children = (
+				2A59659AB14FA1DE887EFBDC /* bitmap-cache.h */,
+				E0573D45F202779CADE81167 /* blip_buf.h */,
+				8B44906DCDE8B935CA2AD173 /* cache-set.h */,
+				5A72FF63BD019CFF270394ED /* cheats.h */,
+				9E8A5643FE33A02E3530E65E /* config.h */,
+				469AB284F8097CFCFDCBA8C2 /* core.h */,
+				A1625542CF894FD963E74A4E /* cpu.h */,
+				C9836A3D5079BC3AE89A2BB0 /* directories.h */,
+				6C448BBADBF1F536D0DD9AE8 /* input.h */,
+				15B6DE1CB2D4E01E17F5C133 /* interface.h */,
+				246DAFBDD31D9D245532F661 /* library.h */,
+				89716BFDC10A5905780A057E /* lockstep.h */,
+				0DBB33F2FD0AEBBB698BA38E /* log.h */,
+				B9EBCA7783D015C8DFBF53ED /* map-cache.h */,
+				C9675721B4BA9A700220C173 /* mem-search.h */,
+				2659C04383A86F0A4AC546A9 /* rewind.h */,
+				C8EF460BF877FC429E283F81 /* scripting.h */,
+				7B0F29118A6159391F47F153 /* serialize.h */,
+				A3565462FD1D7A7E0D6C31B5 /* sync.h */,
+				975FE4B52A517E2033FDB730 /* thread.h */,
+				9510A2614ED6F50868861848 /* tile-cache.h */,
+				4338970F925279A5B99BE1EA /* timing.h */,
+				8D00EB9665461483DDD54F39 /* version.h */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		D5F7C7DDD1B93ED5E205BE55 /* gb */ = {
+			isa = PBXGroup;
+			children = (
+				2F1498721C72DC2F9CBC2BEB /* core.h */,
+				F9C30DD792307D2B34D6D3F1 /* interface.h */,
+			);
+			path = gb;
+			sourceTree = "<group>";
+		};
+		DE87E964303A446D8B6DDB55 /* cart */ = {
+			isa = PBXGroup;
+			children = (
+				CE3F304DEC3A963D17381F2D /* ereader.h */,
+				ED3D19157DF3CCD6F084CC9C /* gpio.h */,
+				80A881C3233116BB7FA69986 /* matrix.h */,
+				10925CD4E67E19A55917143C /* vfame.h */,
+			);
+			path = cart;
+			sourceTree = "<group>";
+		};
+		DF6F2EC677304C28F81B1C7E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				231CF871F7FBBEA06DC915A6 /* AppSettings.swift */,
+				0B03D7811A986AC9BCEA0857 /* Game.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E1CF8FF74C0A449F40B6EEBC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7B7DB02AF3D2CBABC90564C2 /* HapticsService.swift */,
+				5064C4522776A25D7908184C /* StorageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E8B973BBBD79BEB9B46BA300 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				1D5822435DC221B355B0B967 /* libmgba.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		E958A6D416B30319F2AA3F84 /* switch */ = {
+			isa = PBXGroup;
+			children = (
+				5730A4D101D0B27AA1795AE1 /* threading.h */,
+			);
+			path = switch;
+			sourceTree = "<group>";
+		};
+		EA304B56816209D02A5A10C2 /* Emulator */ = {
+			isa = PBXGroup;
+			children = (
+				9DC6E977C1EC3049DB6EBAB9 /* AudioEngine.swift */,
+				9C0FB7DB8EE8B6A75299C201 /* EmulatorBridge.c */,
+				723033B3424A0CFBA09D7703 /* EmulatorBridge.h */,
+				7507FB52741FB7699B3B488C /* EmulatorCore.swift */,
+				8BED1478F9B9CFBEC8617A86 /* GBAEmulator-Bridging-Header.h */,
+				B86D3206A70D5CE551FC497E /* MetalView.swift */,
+				D0D72229068990A29EACE8B2 /* RingBuffer.swift */,
+				75B22445380C8BE8802062FB /* Shaders.metal */,
+				64015C67DC2BFBA600E21AEF /* VideoRenderer.swift */,
+			);
+			path = Emulator;
+			sourceTree = "<group>";
+		};
+		F34ED3533FFE4174A56A98AC /* mgba-util */ = {
+			isa = PBXGroup;
+			children = (
+				5C873D6AE4C73A4C9C2B61B8 /* circle-buffer.h */,
+				E4AE26CA2E055F31BD9E7ADA /* common.h */,
+				E5BE417C9B2446D61D8A4B49 /* configuration.h */,
+				9676F852170377FA569884E2 /* convolve.h */,
+				5A5BC41A2B95DB60B8407D0B /* crc32.h */,
+				47881799A7E93B15F78746EB /* dllexports.h */,
+				BE25651C405D0F6296A403F8 /* elf-read.h */,
+				133AB182068770E094EFA44E /* export.h */,
+				BF00474CD050DFB67FBB51EC /* formatting.h */,
+				D2376AD417795295783D3BF5 /* gui.h */,
+				4D8DD3C0BEAF4C92FDD346F1 /* hash.h */,
+				FCDC0177D13A5A72AD0BD9F9 /* macros.h */,
+				DB8C61085C3D8E31667B4258 /* math.h */,
+				C50FC43CD0482EB7E5C79BB7 /* memory.h */,
+				284D3501BA62CFCDD80472F3 /* patch.h */,
+				0A8DEFF30E18EBB4EE9C9E1A /* png-io.h */,
+				539110F1CC0A1100E05BBC9C /* ring-fifo.h */,
+				779B23C48CB7F2A224976255 /* socket.h */,
+				CCD57DE6BB39B3B342E39E0F /* string.h */,
+				EAEF56CEDC4FA99DC43780D6 /* table.h */,
+				8A69FB4AA0D0E6DEC40B74B4 /* text-codec.h */,
+				BC25EC5A84B67C0763E49F62 /* threading.h */,
+				BC782D1CF5DF4764FF1A0D44 /* vector.h */,
+				9D6619E9E75F6A483C44DCDB /* vfs.h */,
+				30AA400F91D6BBA9291543B7 /* gui */,
+				AD4A8BBC3F2DB6D75C38FEBA /* patch */,
+				564DF9A634E38B56563A2ADA /* platform */,
+			);
+			path = "mgba-util";
+			sourceTree = "<group>";
+		};
+		FC93E12551AB0C52C3C306F3 /* mgba */ = {
+			isa = PBXGroup;
+			children = (
+				CB313260A6740A96CDC50DC4 /* flags.h */,
+				D3514A39E9245CF579D8F16E /* core */,
+				FDC7A24F468720E84BBAAA5E /* debugger */,
+				5FB23DEF3A6E4D5B65B1F619 /* feature */,
+				D5F7C7DDD1B93ED5E205BE55 /* gb */,
+				A858F91E3C4CC2F325A9212E /* gba */,
+				C4A7FAEBC8C0DD310C025DB6 /* internal */,
+				1D0B46A3B192E047735ADB0F /* script */,
+			);
+			path = mgba;
+			sourceTree = "<group>";
+		};
+		FDC7A24F468720E84BBAAA5E /* debugger */ = {
+			isa = PBXGroup;
+			children = (
+				BCED9FFC3BDAAE1E12E329A6 /* debugger.h */,
+			);
+			path = debugger;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		23501961ADCBD34CAB071F8B /* GBAEmulatorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D4D6326A4E71242C38EBD79 /* Build configuration list for PBXNativeTarget "GBAEmulatorUITests" */;
+			buildPhases = (
+				A74B670306F822A50756904E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F51B140FD7E7A2D6544011F3 /* PBXTargetDependency */,
+			);
+			name = GBAEmulatorUITests;
+			packageProductDependencies = (
+			);
+			productName = GBAEmulatorUITests;
+			productReference = BF279E6F86A0599726C0539F /* GBAEmulatorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		38EA2BCCB77D0FB726A728FE /* GBAEmulator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 162A7CA25DA0BAFA2AEF6C18 /* Build configuration list for PBXNativeTarget "GBAEmulator" */;
+			buildPhases = (
+				6A02A0878A976060D569DF64 /* Build mGBA */,
+				3655747021D72E3F5EAC4561 /* Sources */,
+				8A89E2B6CFA3A451C1744016 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GBAEmulator;
+			packageProductDependencies = (
+			);
+			productName = GBAEmulator;
+			productReference = 037268E6C2186DCA443318BA /* GBAEmulator.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4442844C9647A7E7DE725582 /* GBAEmulatorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 684F35C2A981EFC09B3A1FB0 /* Build configuration list for PBXNativeTarget "GBAEmulatorTests" */;
+			buildPhases = (
+				ACECE61E6392C32D158EAE30 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E240C545E01C01F2F2634989 /* PBXTargetDependency */,
+			);
+			name = GBAEmulatorTests;
+			packageProductDependencies = (
+			);
+			productName = GBAEmulatorTests;
+			productReference = 884BE84556C3FD72401736B5 /* GBAEmulatorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1029434107E567F0686A98DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					23501961ADCBD34CAB071F8B = {
+						DevelopmentTeam = "";
+						TestTargetID = 38EA2BCCB77D0FB726A728FE;
+					};
+					4442844C9647A7E7DE725582 = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = 799631CB41B4F4CC46CD78AA /* Build configuration list for PBXProject "GBAEmulator" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = B4B6278DB11DBAD39D5804F7;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 43F0F16FB252EB48992EA4DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				38EA2BCCB77D0FB726A728FE /* GBAEmulator */,
+				4442844C9647A7E7DE725582 /* GBAEmulatorTests */,
+				23501961ADCBD34CAB071F8B /* GBAEmulatorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A89E2B6CFA3A451C1744016 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1027D90E4555638CD84DB32F /* Assets.xcassets in Resources */,
+				BA85DED12031A79D75355527 /* build-ios.sh in Resources */,
+				5523FD256B525CD8E1DD4F50 /* ios.toolchain.cmake in Resources */,
+				A2CCEACB8EE63EB52BC10761 /* libmgba.a in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6A02A0878A976060D569DF64 /* Build mGBA */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build mGBA";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ ! -f \"${PROJECT_DIR}/GBAEmulator/mGBA/lib/libmgba.a\" ]; then\n  echo \"Building mGBA...\"\n  sh \"${PROJECT_DIR}/GBAEmulator/mGBA/build-ios.sh\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3655747021D72E3F5EAC4561 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B08201FEF302035677B15471 /* AppSettings.swift in Sources */,
+				A9FB3CE969B084F0FFCDC6ED /* AudioEngine.swift in Sources */,
+				49ED105BD922C58366663EA8 /* ControllerOverlay.swift in Sources */,
+				AAC0E7A377959DD5F0DEF94E /* EmulatorBridge.c in Sources */,
+				416CAD9B3AA78B666FEB6009 /* EmulatorCore.swift in Sources */,
+				A748F325731C6762CDC9F970 /* GBAEmulatorApp.swift in Sources */,
+				0B4FCB4B7C785F28DAE26095 /* Game.swift in Sources */,
+				83A917CA92E3A12AAFC20E6B /* GamePlayView.swift in Sources */,
+				A3B9CEE9DA3CB749BC851F3A /* HapticsService.swift in Sources */,
+				08A4F2D24491CAB1EC62FEE4 /* InputManager.swift in Sources */,
+				737208D13BB058B532EAA415 /* LibraryView.swift in Sources */,
+				A010685FAC46525994E28235 /* MetalView.swift in Sources */,
+				13AB44D56002EBFB6721AECB /* PauseMenuView.swift in Sources */,
+				585350A4E491DD7FA483BE30 /* RingBuffer.swift in Sources */,
+				2B29160C42204AC18562847B /* SaveStateManager.swift in Sources */,
+				695F8B51A49A12B08F854096 /* SettingsView.swift in Sources */,
+				9A099FDC8D94AAC97E16A05D /* Shaders.metal in Sources */,
+				58CCF00289BBF8E7A6DFA5A7 /* StorageService.swift in Sources */,
+				339E00BE2EE81C5E76B0B27B /* VideoRenderer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A74B670306F822A50756904E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACECE61E6392C32D158EAE30 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9779A6069D05BB77AFE2EC3 /* RingBufferTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E240C545E01C01F2F2634989 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 38EA2BCCB77D0FB726A728FE /* GBAEmulator */;
+			targetProxy = 810B65BE87CCE876D5B30164 /* PBXContainerItemProxy */;
+		};
+		F51B140FD7E7A2D6544011F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 38EA2BCCB77D0FB726A728FE /* GBAEmulator */;
+			targetProxy = A8807B8A9FCD5968FEF75E29 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		044A5F2AD9F8990FF8B167B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5452A3WHHK;
+				INFOPLIST_FILE = GBAEmulator/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gbaemulator.app;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3AEB7087B1FCEBF8D2AC4D54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gbaemulator.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GBAEmulator;
+			};
+			name = Debug;
+		};
+		50D0DDD7B8603067C188BED2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gbaemulator.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GBAEmulator;
+			};
+			name = Release;
+		};
+		5FAA68FF830A7D236E71A5BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5452A3WHHK;
+				INFOPLIST_FILE = GBAEmulator/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gbaemulator.app;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A63F33E9E6BAE4E7BAEC7500 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/GBAEmulator/mGBA/include";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/GBAEmulator/mGBA/lib";
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-lmgba",
+					"-lz",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "GBAEmulator/Core/Emulator/GBAEmulator-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		AC4221893217BCEBA1683D46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gbaemulator.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GBAEmulator.app/GBAEmulator";
+			};
+			name = Release;
+		};
+		B3A0BD03173060F1C357C85D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gbaemulator.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GBAEmulator.app/GBAEmulator";
+			};
+			name = Debug;
+		};
+		D4DA20391519DFC3CE4C37B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/GBAEmulator/mGBA/include";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/GBAEmulator/mGBA/lib";
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lmgba",
+					"-lz",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "GBAEmulator/Core/Emulator/GBAEmulator-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D4D6326A4E71242C38EBD79 /* Build configuration list for PBXNativeTarget "GBAEmulatorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AEB7087B1FCEBF8D2AC4D54 /* Debug */,
+				50D0DDD7B8603067C188BED2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		162A7CA25DA0BAFA2AEF6C18 /* Build configuration list for PBXNativeTarget "GBAEmulator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FAA68FF830A7D236E71A5BB /* Debug */,
+				044A5F2AD9F8990FF8B167B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		684F35C2A981EFC09B3A1FB0 /* Build configuration list for PBXNativeTarget "GBAEmulatorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3A0BD03173060F1C357C85D /* Debug */,
+				AC4221893217BCEBA1683D46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		799631CB41B4F4CC46CD78AA /* Build configuration list for PBXProject "GBAEmulator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4DA20391519DFC3CE4C37B5 /* Debug */,
+				A63F33E9E6BAE4E7BAEC7500 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1029434107E567F0686A98DB /* Project object */;
+}

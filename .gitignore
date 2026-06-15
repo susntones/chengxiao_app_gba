@@ -1,0 +1,49 @@
+# Xcode
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+build/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.moved-aside
+*.hmap
+*.ipa
+
+# mGBA build artifacts
+GBAEmulator/mGBA/build-ios/
+GBAEmulator/mGBA/mgba-src/
+GBAEmulator/mGBA/lib/
+GBAEmulator/mGBA/include/mgba*/
+GBAEmulator/mGBA/ios.toolchain.cmake
+
+# Swift Package Manager
+.build/
+Packages/
+
+# CocoaPods
+Pods/
+
+# OS
+.DS_Store
+*.swp
+*~
+
+# User files
+*.xcuserstate
+
+# ROMs (never commit game files)
+*.gba
+*.gbc
+*.gb
+*.sav
+*.state
+
+# Claude / OMC
+.omc/
+.claude/plans/
+
+# IDE
+.idea/
+.vscode/
