@@ -51,7 +51,7 @@ final class SaveStateManager {
         let metadataPath = StorageService.stateMetadataPath(for: gameID, slot: slot)
 
         guard let data = try? Data(contentsOf: metadataPath),
-              var metadata = try? JSONDecoder().decode(SaveStateMetadata.self, from: data) else {
+              let metadata = try? JSONDecoder().decode(SaveStateMetadata.self, from: data) else {
             return
         }
 
@@ -88,7 +88,7 @@ struct SaveStateSlot: Identifiable {
     var id: Int { slot }
 
     var displayName: String {
-        if isAutoSave { return "Auto Save" }
-        return "Slot \(slot)"
+        if isAutoSave { return "自动存档" }
+        return "存档位 \(slot + 1)"
     }
 }

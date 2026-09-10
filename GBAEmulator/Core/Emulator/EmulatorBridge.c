@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 // mGBA headers
 #include <mgba/core/core.h>
+#include <mgba/core/log.h>
 #include <mgba/core/blip_buf.h>
 #include <mgba/gba/core.h>
 #include <mgba/core/serialize.h>
@@ -22,7 +24,7 @@ struct EmulatorContext {
     int audioSamplesAvailable;
     struct mCheatDevice* cheatDevice;
     char gameTitle[13];
-    char gameCode[5];
+    char gameCode[9];
     bool romLoaded;
 };
 
@@ -54,15 +56,7 @@ EmulatorContext* emulator_create(void) {
 void emulator_destroy(EmulatorContext* ctx) {
     if (!ctx) return;
 
-    if (ctx->cheatDevice) {
-        mCheatDeviceDestroy(ctx->cheatDevice);
-        ctx->cheatDevice = NULL;
-    }
-
-    if (ctx->core) {
-        ctx->core->deinit(ctx->core);
-        ctx->core = NULL;
-    }
+    emulator_close_rom(ctx);
 
     if (ctx->videoBuffer) {
         free(ctx->videoBuffer);
@@ -82,11 +76,7 @@ void emulator_destroy(EmulatorContext* ctx) {
 bool emulator_load_rom(EmulatorContext* ctx, const char* romPath) {
     if (!ctx || !romPath) return false;
 
-    // Close existing ROM if any
-    if (ctx->core) {
-        ctx->core->deinit(ctx->core);
-        ctx->core = NULL;
-    }
+    emulator_close_rom(ctx);
 
     // Detect platform and create core
     ctx->core = mCoreFind(romPath);
@@ -96,7 +86,18 @@ bool emulator_load_rom(EmulatorContext* ctx, const char* romPath) {
     }
 
     // Initialize core
-    ctx->core->init(ctx->core);
+    if (!ctx->core->init(ctx->core)) {
+        // The mGBA init contract leaves the allocated core owned by the caller.
+        free(ctx->core);
+        ctx->core = NULL;
+        return false;
+    }
+    mCoreInitConfig(ctx->core, "GBAEmulator");
+    // Avoid synchronous stderr logging in release gameplay. ROM hacks may perform
+    // unusual accesses every frame; formatting those diagnostics can otherwise
+    // consume enough CPU to prevent high fast-forward multipliers.
+    mCoreConfigSetIntValue(&ctx->core->config, "logLevel", mLOG_FATAL | mLOG_ERROR);
+    ctx->core->opts.skipBios = true;
 
     // Set video buffer
     ctx->core->setVideoBuffer(ctx->core, ctx->videoBuffer, GBA_SCREEN_WIDTH);
@@ -108,16 +109,14 @@ bool emulator_load_rom(EmulatorContext* ctx, const char* romPath) {
     struct VFile* rom = VFileOpen(romPath, O_RDONLY);
     if (!rom) {
         fprintf(stderr, "Failed to open ROM: %s\n", romPath);
-        ctx->core->deinit(ctx->core);
-        ctx->core = NULL;
+        emulator_close_rom(ctx);
         return false;
     }
 
     if (!ctx->core->loadROM(ctx->core, rom)) {
         fprintf(stderr, "Failed to load ROM: %s\n", romPath);
         rom->close(rom);
-        ctx->core->deinit(ctx->core);
-        ctx->core = NULL;
+        emulator_close_rom(ctx);
         return false;
     }
 
@@ -131,7 +130,7 @@ bool emulator_load_rom(EmulatorContext* ctx, const char* romPath) {
     }
     if (ctx->core->getGameCode) {
         ctx->core->getGameCode(ctx->core, ctx->gameCode);
-        ctx->gameCode[4] = '\0';
+        ctx->gameCode[8] = '\0';
     }
 
     ctx->romLoaded = true;
@@ -160,9 +159,12 @@ void emulator_set_save_path(EmulatorContext* ctx, const char* savePath) {
 void emulator_close_rom(EmulatorContext* ctx) {
     if (!ctx || !ctx->core) return;
 
+    mCoreConfigDeinit(&ctx->core->config);
     ctx->core->deinit(ctx->core);
     ctx->core = NULL;
+    ctx->cheatDevice = NULL; // borrowed; destroyed by core->deinit
     ctx->romLoaded = false;
+    ctx->audioSamplesAvailable = 0;
 }
 
 // MARK: - Emulation Control
@@ -208,17 +210,20 @@ int emulator_get_audio_samples_available(EmulatorContext* ctx) {
 }
 
 int emulator_read_audio(EmulatorContext* ctx, int16_t* buffer, int maxFrames) {
-    if (!ctx || !buffer) return 0;
+    if (!ctx || !buffer || maxFrames <= 0) return 0;
 
     int toCopy = ctx->audioSamplesAvailable;
     if (toCopy > maxFrames) toCopy = maxFrames;
 
     memcpy(buffer, ctx->audioBuffer, toCopy * 2 * sizeof(int16_t));
+    ctx->audioSamplesAvailable -= toCopy;
+    memmove(ctx->audioBuffer, ctx->audioBuffer + toCopy * 2,
+            ctx->audioSamplesAvailable * 2 * sizeof(int16_t));
     return toCopy;
 }
 
 void emulator_set_audio_sample_rate(EmulatorContext* ctx, double sampleRate) {
-    if (!ctx || !ctx->core) return;
+    if (!ctx || !ctx->core || !isfinite(sampleRate) || sampleRate <= 0) return;
     ctx->core->setAudioBufferSize(ctx->core, AUDIO_BUFFER_SIZE);
     // mGBA handles resampling internally via blip_buf
     // The output rate is set via blip_set_rates
@@ -240,7 +245,7 @@ void emulator_set_keys(EmulatorContext* ctx, uint16_t keyMask) {
 bool emulator_save_state_to_file(EmulatorContext* ctx, const char* path) {
     if (!ctx || !ctx->core || !path) return false;
 
-    struct VFile* vf = VFileOpen(path, O_CREAT | O_TRUNC | O_WRONLY);
+    struct VFile* vf = VFileOpen(path, O_CREAT | O_TRUNC | O_RDWR);
     if (!vf) return false;
 
     bool success = mCoreSaveStateNamed(ctx->core, vf, SAVESTATE_ALL);
@@ -265,25 +270,13 @@ size_t emulator_get_state_size(EmulatorContext* ctx) {
 }
 
 bool emulator_save_state_to_buffer(EmulatorContext* ctx, void* buffer, size_t size) {
-    if (!ctx || !ctx->core || !buffer) return false;
-
-    struct VFile* vf = VFileFromMemory(buffer, size);
-    if (!vf) return false;
-
-    bool success = mCoreSaveStateNamed(ctx->core, vf, SAVESTATE_ALL);
-    vf->close(vf);
-    return success;
+    if (!ctx || !ctx->core || !buffer || size < ctx->core->stateSize(ctx->core)) return false;
+    return ctx->core->saveState(ctx->core, buffer);
 }
 
 bool emulator_load_state_from_buffer(EmulatorContext* ctx, const void* buffer, size_t size) {
-    if (!ctx || !ctx->core || !buffer) return false;
-
-    struct VFile* vf = VFileFromConstMemory(buffer, size);
-    if (!vf) return false;
-
-    bool success = mCoreLoadStateNamed(ctx->core, vf, SAVESTATE_ALL);
-    vf->close(vf);
-    return success;
+    if (!ctx || !ctx->core || !buffer || size < ctx->core->stateSize(ctx->core)) return false;
+    return ctx->core->loadState(ctx->core, buffer);
 }
 
 // MARK: - Cheats
@@ -331,9 +324,7 @@ void emulator_set_cheat_enabled(EmulatorContext* ctx, int index, bool enabled) {
 void emulator_set_skip_bios(EmulatorContext* ctx, bool skip) {
     if (!ctx || !ctx->core) return;
 
-    struct mCoreOptions opts = {};
-    mCoreConfigGetIntValue(&ctx->core->config, "skipBios", (int*)&opts.skipBios);
-    opts.skipBios = skip;
+    ctx->core->opts.skipBios = skip;
     mCoreConfigSetIntValue(&ctx->core->config, "skipBios", skip ? 1 : 0);
 }
 

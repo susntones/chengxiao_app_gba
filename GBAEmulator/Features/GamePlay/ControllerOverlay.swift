@@ -46,8 +46,8 @@ struct ControllerOverlay: View {
             // Start/Select + L/R
             HStack(spacing: 30) {
                 ShoulderButton(label: "L", button: .l, inputManager: inputManager)
-                SmallButton(label: "SELECT", button: .select, inputManager: inputManager)
-                SmallButton(label: "START", button: .start, inputManager: inputManager)
+                SmallButton(label: "选择", button: .select, inputManager: inputManager)
+                SmallButton(label: "开始", button: .start, inputManager: inputManager)
                 ShoulderButton(label: "R", button: .r, inputManager: inputManager)
             }
             .padding(.bottom, 30)
@@ -66,7 +66,7 @@ struct ControllerOverlay: View {
                 DPadView(inputManager: inputManager)
                     .frame(width: 130 * scale, height: 130 * scale)
                 Spacer()
-                SmallButton(label: "SELECT", button: .select, inputManager: inputManager)
+                SmallButton(label: "选择", button: .select, inputManager: inputManager)
                     .padding(.bottom, 10)
             }
             .padding(.leading, 15)
@@ -81,7 +81,7 @@ struct ControllerOverlay: View {
                 ABButtonsView(inputManager: inputManager)
                     .frame(width: 130 * scale, height: 130 * scale)
                 Spacer()
-                SmallButton(label: "START", button: .start, inputManager: inputManager)
+                SmallButton(label: "开始", button: .start, inputManager: inputManager)
                     .padding(.bottom, 10)
             }
             .padding(.trailing, 15)

@@ -2,7 +2,9 @@ import Foundation
 import AVFoundation
 
 /// Audio engine that plays GBA audio samples via AVAudioEngine
-final class AudioEngine {
+// Engine control is main-thread-only; worker access is limited to the locked ring
+// buffer, and the render callback reads only the ring buffer and atomic mute flag.
+final class AudioEngine: @unchecked Sendable {
     // MARK: - Properties
     private let engine = AVAudioEngine()
     private var sourceNode: AVAudioSourceNode?
@@ -15,7 +17,7 @@ final class AudioEngine {
 
     // State
     private(set) var isRunning = false
-    private var isMuted = false
+    private let isMuted = AtomicBool(false)
 
     // Ring buffer capacity (frames)
     private let bufferCapacity = 8192
@@ -45,37 +47,26 @@ final class AudioEngine {
 
     private func setupEngine() {
         let format = AVAudioFormat(
-            commonFormat: .pcmFormatInt16,
+            commonFormat: .pcmFormatFloat32,
             sampleRate: sampleRate,
             channels: AVAudioChannelCount(channelCount),
-            interleaved: true
+            interleaved: false
         )!
 
         sourceNode = AVAudioSourceNode(format: format) { [weak self] _, _, frameCount, audioBufferList -> OSStatus in
             guard let self = self else { return noErr }
 
             let ablPointer = UnsafeMutableAudioBufferListPointer(audioBufferList)
-            guard let buffer = ablPointer.first,
-                  let data = buffer.mData?.assumingMemoryBound(to: Int16.self) else {
+            guard ablPointer.count == 2,
+                  let left = ablPointer[0].mData?.assumingMemoryBound(to: Float.self),
+                  let right = ablPointer[1].mData?.assumingMemoryBound(to: Float.self) else {
                 return noErr
             }
-
             let framesNeeded = Int(frameCount)
-
-            if self.isMuted {
-                // Output silence when muted
-                memset(data, 0, framesNeeded * self.channelCount * MemoryLayout<Int16>.size)
-                return noErr
-            }
-
-            // Read from ring buffer
-            let framesRead = self.ringBuffer.read(into: data, maxFrames: framesNeeded)
-
-            // Fill remaining with silence to prevent noise
-            if framesRead < framesNeeded {
-                let remainingStart = data.advanced(by: framesRead * self.channelCount)
-                let remainingBytes = (framesNeeded - framesRead) * self.channelCount * MemoryLayout<Int16>.size
-                memset(remainingStart, 0, remainingBytes)
+            self.ringBuffer.read(left: left, right: right, frames: framesNeeded)
+            if self.isMuted.value {
+                left.update(repeating: 0, count: framesNeeded)
+                right.update(repeating: 0, count: framesNeeded)
             }
 
             return noErr
@@ -92,7 +83,8 @@ final class AudioEngine {
     func start() {
         guard !isRunning else { return }
 
-        setupEngine()
+        if sourceNode == nil { setupEngine() }
+        ringBuffer.reset()
 
         do {
             try engine.start()
@@ -104,6 +96,7 @@ final class AudioEngine {
 
     func pause() {
         engine.pause()
+        ringBuffer.reset()
         isRunning = false
     }
 
@@ -131,6 +124,9 @@ final class AudioEngine {
 
     /// Write audio samples from emulation thread to ring buffer
     func writeSamples(_ samples: [Int16], count: Int) {
+        // The core still drains its audio while fast-forwarding, but copying audio
+        // into a real-time buffer that cannot keep up at 10x only wastes CPU.
+        guard !isMuted.value else { return }
         ringBuffer.write(samples, count: count)
     }
 
@@ -141,11 +137,12 @@ final class AudioEngine {
     }
 
     func setMuted(_ muted: Bool) {
-        isMuted = muted
+        isMuted.value = muted
     }
 
     /// Mute audio during fast forward to avoid chipmunk effect
     func setFastForwardMode(_ enabled: Bool) {
-        isMuted = enabled
+        isMuted.value = enabled
+        ringBuffer.reset()
     }
 }

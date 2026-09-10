@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 /// Main game library view
 struct LibraryView: View {
     @Binding var selectedGame: Game?
+    @Binding var pendingImportURL: URL?
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Game.lastPlayed, order: .reverse) private var games: [Game]
 
@@ -12,6 +13,7 @@ struct LibraryView: View {
     @State private var showingImporter = false
     @State private var showingSettings = false
     @State private var viewMode: ViewMode = .grid
+    @State private var importError: String?
 
     enum ViewMode: String {
         case grid, list
@@ -40,7 +42,7 @@ struct LibraryView: View {
                 libraryContent
             }
         }
-        .navigationTitle("GBA Emulator")
+        .navigationTitle("GBA 模拟器")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -66,25 +68,30 @@ struct LibraryView: View {
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Search games")
+        .searchable(text: $searchText, prompt: "搜索游戏")
         .fileImporter(
             isPresented: $showingImporter,
-            allowedContentTypes: [
-                UTType(filenameExtension: "gba")!,
-                UTType(filenameExtension: "gbc")!,
-                UTType(filenameExtension: "gb")!,
-                .zip
-            ],
+            allowedContentTypes: [UTType(filenameExtension: "gba")!],
             allowsMultipleSelection: true
         ) { result in
             handleImport(result)
+        }
+        .alert("导入失败", isPresented: Binding(
+            get: { importError != nil },
+            set: { if !$0 { importError = nil } }
+        )) {
+            Button("确定", role: .cancel) {}
+        } message: {
+            Text(importError ?? "")
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView()
         }
         .onAppear {
             StorageService.createDirectoriesIfNeeded()
+            importPendingURLIfNeeded()
         }
+        .onChange(of: pendingImportURL) { _, _ in importPendingURLIfNeeded() }
     }
 
     // MARK: - Empty State
@@ -95,18 +102,18 @@ struct LibraryView: View {
                 .font(.system(size: 64))
                 .foregroundColor(.secondary)
 
-            Text("No Games")
+            Text("暂无游戏")
                 .font(.title2)
                 .fontWeight(.semibold)
 
-            Text("Import GBA ROM files to get started")
+            Text("导入 GBA 游戏文件即可开始")
                 .font(.body)
                 .foregroundColor(.secondary)
 
             Button {
                 showingImporter = true
             } label: {
-                Label("Import Games", systemImage: "plus.circle.fill")
+                Label("导入游戏", systemImage: "plus.circle.fill")
                     .font(.headline)
                     .padding()
                     .background(Color.accentColor)
@@ -135,7 +142,7 @@ struct LibraryView: View {
                             .padding(.horizontal)
                         }
                     } header: {
-                        Text("Recently Played")
+                        Text("最近游玩")
                             .font(.headline)
                             .padding(.horizontal)
                     }
@@ -150,10 +157,10 @@ struct LibraryView: View {
                     }
                 } header: {
                     HStack {
-                        Text("All Games")
+                        Text("全部游戏")
                             .font(.headline)
                         Spacer()
-                        Text("\(filteredGames.count) games")
+                        Text("\(filteredGames.count) 个游戏")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -200,7 +207,7 @@ struct LibraryView: View {
             game.isFavorite.toggle()
         } label: {
             Label(
-                game.isFavorite ? "Remove Favorite" : "Add to Favorites",
+                game.isFavorite ? "取消收藏" : "添加收藏",
                 systemImage: game.isFavorite ? "star.slash" : "star"
             )
         }
@@ -208,7 +215,7 @@ struct LibraryView: View {
         Button(role: .destructive) {
             deleteGame(game)
         } label: {
-            Label("Delete", systemImage: "trash")
+            Label("删除", systemImage: "trash")
         }
     }
 
@@ -216,6 +223,7 @@ struct LibraryView: View {
 
     private func launchGame(_ game: Game) {
         game.lastPlayed = Date()
+        try? modelContext.save()
         selectedGame = game
     }
 
@@ -226,11 +234,28 @@ struct LibraryView: View {
                 importROM(from: url)
             }
         case .failure(let error):
-            print("Import failed: \(error)")
+            importError = error.localizedDescription
         }
     }
 
-    private func importROM(from url: URL) {
+    private func importPendingURLIfNeeded() {
+        guard let url = pendingImportURL else { return }
+        pendingImportURL = nil
+        if let game = importROM(from: url) {
+            // Wait for SwiftData to assign a permanent identity before gameplay uses
+            // that identity for save-state paths.
+            do {
+                try modelContext.save()
+                launchGame(game)
+            } catch {
+                modelContext.delete(game)
+                importError = "无法创建游戏：\(error.localizedDescription)"
+            }
+        }
+    }
+
+    @discardableResult
+    private func importROM(from url: URL) -> Game? {
         do {
             let (fileName, fileSize) = try StorageService.importROM(from: url)
             let title = (fileName as NSString).deletingPathExtension
@@ -243,8 +268,10 @@ struct LibraryView: View {
                 fileSize: fileSize
             )
             modelContext.insert(game)
+            return game
         } catch {
-            print("Failed to import ROM: \(error)")
+            importError = error.localizedDescription
+            return nil
         }
     }
 

@@ -2,6 +2,10 @@
 
 A native iOS Game Boy Advance emulator built with **SwiftUI** and **mGBA** core, inspired by [Delta Emulator](https://faq.deltaemulator.com/).
 
+## Documentation
+
+- [项目架构与核心逻辑（中文）](docs/架构与核心逻辑.md) — 模块职责、运行流程、线程模型、音视频、输入、存档与当前实现边界。
+
 ## Features
 
 - **Accurate GBA Emulation** — Powered by mGBA, one of the most accurate GBA emulators
@@ -9,14 +13,14 @@ A native iOS Game Boy Advance emulator built with **SwiftUI** and **mGBA** core,
 - **Save States** — 10 manual save slots + auto-save with thumbnails
 - **On-Screen Controls** — D-pad, A/B/L/R/Start/Select with haptic feedback
 - **External Controllers** — MFi, PS4/PS5, Xbox controller support
-- **Fast Forward** — 2x/4x/8x speed with one-tap toggle
+- **Fast Forward** — 2x–10x speed with one-tap toggle
 - **Metal Rendering** — 60fps GPU-accelerated display with scaling filters
 - **Low-Latency Audio** — AVAudioEngine with ring buffer audio pipeline
 
 ## Requirements
 
-- **iOS 16.0+**
-- **Xcode 15.0+**
+- **iOS 17.0+**
+- **Xcode 15.0+** (Xcode 26 may require `xcodebuild -downloadComponent MetalToolchain` once)
 - **Swift 5.9+**
 - CMake 3.20+ (for mGBA compilation)
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) (for project generation)
@@ -41,13 +45,13 @@ xcodegen generate
 
 ```bash
 chmod +x GBAEmulator/mGBA/build-ios.sh
-./GBAEmulator/mGBA/build-ios.sh
+./GBAEmulator/mGBA/build-ios.sh iphoneos
 ```
 
 This will:
 - Clone mGBA v0.10.3 source
 - Cross-compile for iOS arm64
-- Place `libmgba.a` in `GBAEmulator/mGBA/lib/`
+- Place `libmgba.a` in `GBAEmulator/mGBA/lib/iphoneos/`
 - Copy headers to `GBAEmulator/mGBA/include/`
 
 ### 4. Open in Xcode
@@ -56,13 +60,13 @@ This will:
 open GBAEmulator.xcodeproj
 ```
 
-Select your development team, then build and run on device.
+Select your personal development team, change `com.gbaemulator.app` in `project.yml` if it is not unique, regenerate with `xcodegen generate`, then build and run on device.
 
-> **Note**: The emulator requires Metal, so it must run on a physical device (not Simulator).
+> **Note**: Gameplay is intended for a Metal-capable physical device. An arm64 simulator library can be built with `./GBAEmulator/mGBA/build-ios.sh iphonesimulator` for tests.
 
 ## Usage
 
-1. **Import ROMs**: Tap `+` in the library to import `.gba` files from the Files app
+1. **Import ROMs**: Tap `+` in the library to import legally obtained `.gba` files from the Files app
 2. **Play**: Tap a game to start playing
 3. **Pause**: Tap the pause button (top-right) for save states, fast forward, etc.
 4. **Save/Load**: Use the pause menu to manage save states
@@ -79,7 +83,7 @@ GBAEmulator/
 │   │   ├── EmulatorCore.swift    # Swift emulator wrapper
 │   │   ├── VideoRenderer.swift   # Metal rendering pipeline
 │   │   ├── AudioEngine.swift     # AVAudioEngine audio output
-│   │   ├── RingBuffer.swift      # Lock-free audio ring buffer
+│   │   ├── RingBuffer.swift      # Thread-safe SPSC audio ring buffer
 │   │   ├── Shaders.metal         # Vertex/fragment shaders
 │   │   └── MetalView.swift       # SwiftUI Metal view
 │   ├── Input/
@@ -114,7 +118,7 @@ GBAEmulator/
 - **AVAudioEngine** with SPSC ring buffer for low-latency audio
 - **SwiftData** for game metadata persistence
 - **GCController** framework for external controller support
-- Dedicated emulation thread with CADisplayLink sync
+- Dedicated emulation thread paced at the GBA's native 59.7275 Hz
 
 ## Legal
 

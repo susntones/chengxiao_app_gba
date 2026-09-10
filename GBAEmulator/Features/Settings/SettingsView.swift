@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Settings screen
+/// 设置页面
 @available(iOS 17.0, *)
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
@@ -9,155 +9,124 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // MARK: - Display Section
-                Section("Display") {
-                    Picker("Scaling Mode", selection: $settings.scalingMode) {
+                Section("显示") {
+                    Picker("缩放模式", selection: $settings.scalingMode) {
                         ForEach(ScalingMode.allCases) { mode in
                             Text(mode.displayName).tag(mode)
                         }
                     }
-
-                    Picker("Screen Filter", selection: $settings.screenFilter) {
+                    Picker("画面滤镜", selection: $settings.screenFilter) {
                         ForEach(ScreenFilter.allCases) { filter in
                             Text(filter.displayName).tag(filter)
                         }
                     }
-
-                    Toggle("Screen Smoothing", isOn: $settings.screenSmoothing)
+                    Toggle("画面平滑", isOn: $settings.screenSmoothing)
                 }
 
-                // MARK: - Audio Section
-                Section("Audio") {
-                    Toggle("Audio Enabled", isOn: $settings.audioEnabled)
-
+                Section("声音") {
+                    Toggle("启用声音", isOn: $settings.audioEnabled)
                     HStack {
-                        Text("Volume")
+                        Text("音量")
                         Slider(value: $settings.audioVolume, in: 0...1)
                     }
                 }
 
-                // MARK: - Controls Section
-                Section("Controls") {
+                Section("控制") {
                     HStack {
-                        Text("Button Opacity")
+                        Text("按键透明度")
                         Slider(value: $settings.controlOpacity, in: 0.2...1.0)
                     }
-
                     HStack {
-                        Text("Button Scale")
+                        Text("按键大小")
                         Slider(value: $settings.controlScale, in: 0.7...1.5)
                     }
-
-                    Picker("Haptic Feedback", selection: $settings.hapticStrength) {
+                    Picker("触感反馈", selection: $settings.hapticStrength) {
                         ForEach(HapticStrength.allCases) { strength in
                             Text(strength.displayName).tag(strength)
                         }
                     }
                 }
 
-                // MARK: - Emulation Section
-                Section("Emulation") {
-                    Picker("Fast Forward Speed", selection: $settings.fastForwardSpeed) {
+                Section("模拟") {
+                    Picker("快进速度", selection: $settings.fastForwardSpeed) {
                         ForEach(FastForwardSpeed.allCases) { speed in
                             Text(speed.displayName).tag(speed)
                         }
                     }
+                    .pickerStyle(.menu)
 
-                    Toggle("Auto-Save on Exit", isOn: $settings.autoSaveEnabled)
+                    Text("支持 2～10 倍速；实际速度取决于设备性能。快进期间自动静音。")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+
+                    Toggle("退出时自动存档", isOn: $settings.autoSaveEnabled)
                 }
 
-                // MARK: - About Section
-                Section("About") {
+                Section("关于") {
                     HStack {
-                        Text("Version")
+                        Text("版本")
                         Spacer()
-                        Text("1.0.0")
-                            .foregroundColor(.secondary)
+                        Text("1.0.0").foregroundColor(.secondary)
                     }
-
                     HStack {
-                        Text("Emulation Core")
+                        Text("模拟核心")
                         Spacer()
-                        Text("mGBA 0.10.3")
-                            .foregroundColor(.secondary)
+                        Text("mGBA 0.10.3").foregroundColor(.secondary)
                     }
-
-                    NavigationLink("Licenses") {
-                        LicensesView()
-                    }
-
-                    NavigationLink("Legal Notice") {
-                        LegalNoticeView()
-                    }
+                    NavigationLink("开源许可") { LicensesView() }
+                    NavigationLink("法律声明") { LegalNoticeView() }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle("设置")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button("完成") { dismiss() }
                 }
             }
         }
     }
 }
-
-// MARK: - Licenses View
 
 struct LicensesView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Group {
-                    Text("mGBA")
-                        .font(.headline)
-                    Text("Copyright (c) 2013-2024 Jeffrey Pfau")
-                        .font(.caption)
-                    Text("""
-                    This Source Code Form is subject to the terms of the Mozilla Public \
-                    License, v. 2.0. If a copy of the MPL was not distributed with this \
-                    file, You can obtain one at http://mozilla.org/MPL/2.0/.
-                    """)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                }
+                Text("mGBA").font(.headline)
+                Text("版权所有 © 2013–2024 Jeffrey Pfau").font(.caption)
+                Text("""
+                本源代码形式受 Mozilla 公共许可证 2.0 版约束。若本软件未随附该许可证，\
+                可前往 http://mozilla.org/MPL/2.0/ 获取。
+                """)
+                .font(.caption)
+                .foregroundColor(.secondary)
             }
             .padding()
         }
-        .navigationTitle("Licenses")
+        .navigationTitle("开源许可")
     }
 }
-
-// MARK: - Legal Notice View
 
 struct LegalNoticeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Legal Notice")
-                    .font(.headline)
-
+                Text("法律声明").font(.headline)
                 Text("""
-                This application is a Game Boy Advance emulator for personal use.
+                本应用是供个人使用的 Game Boy Advance 模拟器。
 
-                **ROM Files**: This app does not include any game ROM files. Users are \
-                responsible for providing their own legally obtained ROM files. It is \
-                illegal to download ROM files for games you do not own.
+                **游戏文件**：本应用不包含任何游戏 ROM。用户须自行提供合法取得的 ROM 文件。下载自己并未拥有的游戏 ROM 可能违反法律。
 
-                **BIOS**: This app uses mGBA's built-in open-source BIOS implementation. \
-                No proprietary Nintendo BIOS is included or required.
+                **BIOS**：本应用使用 mGBA 内置的开源 BIOS 实现，不包含、也不要求使用任天堂专有 BIOS。
 
-                **Trademarks**: Game Boy Advance is a trademark of Nintendo Co., Ltd. \
-                This app is not affiliated with, endorsed by, or connected to Nintendo \
-                in any way.
+                **商标**：Game Boy Advance 是 Nintendo Co., Ltd. 的商标。本应用与任天堂无隶属、认可或合作关系。
 
-                **Disclaimer**: This software is provided "as is" without warranty of \
-                any kind. The developers are not responsible for any misuse of this application.
+                **免责声明**：本软件按“原样”提供，不作任何形式的保证。开发者不对本应用的任何不当使用负责。
                 """)
                 .font(.body)
             }
             .padding()
         }
-        .navigationTitle("Legal Notice")
+        .navigationTitle("法律声明")
     }
 }
