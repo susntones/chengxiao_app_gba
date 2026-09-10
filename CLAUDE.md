@@ -75,7 +75,7 @@ The hot path is **Swift → C bridge → mGBA core → Metal/Audio**, with three
 
 ### Persistence
 
-- `Game` is a `@Model` (SwiftData). `ContentView` injects `ModelContainer(for: Game.self)` once at app launch.
+- `Game` is a `@Model` (SwiftData). `GBAEmulatorApp.init()` creates the single `ModelContainer(for: Game.self)` and attaches it to `ContentView` via `.modelContainer(...)`.
 - File layout under `Documents/`: `ROMs/`, `Saves/` (battery `.sav`), `States/<gameID>/slot{0..9}.{state,png,json}` + `auto.{state,png}`, `CoverArt/`. All paths are funneled through `StorageService` — never construct paths directly.
 - `gameID` is `game.persistentModelID.hashValue.description`. Don't change this without a migration; it's used as the directory name for save states.
 - Settings live in `UserDefaults` via the `@Observable` `SettingsManager.shared`.

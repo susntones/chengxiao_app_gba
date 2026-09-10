@@ -23,7 +23,7 @@ struct PauseMenuView: View {
             // Menu card
             VStack(spacing: 0) {
                 // Header
-                Text("Paused")
+                Text("已暂停")
                     .font(.title2)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
@@ -35,32 +35,32 @@ struct PauseMenuView: View {
 
                 // Menu items
                 VStack(spacing: 0) {
-                    PauseMenuItem(icon: "play.fill", title: "Resume", color: .green) {
+                    PauseMenuItem(icon: "play.fill", title: "继续游戏", color: .green) {
                         onResume()
                     }
 
-                    PauseMenuItem(icon: "square.and.arrow.down", title: "Save State", color: .blue) {
+                    PauseMenuItem(icon: "square.and.arrow.down", title: "保存状态", color: .blue) {
                         saveStateMode = .save
                         showingSaveStates = true
                     }
 
-                    PauseMenuItem(icon: "square.and.arrow.up", title: "Load State", color: .orange) {
+                    PauseMenuItem(icon: "square.and.arrow.up", title: "读取状态", color: .orange) {
                         saveStateMode = .load
                         showingSaveStates = true
                     }
 
-                    PauseMenuItem(icon: "bolt.fill", title: "Quick Save", color: .cyan) {
+                    PauseMenuItem(icon: "bolt.fill", title: "快速保存", color: .cyan) {
                         viewModel.saveState(slot: 0)
                         onResume()
                     }
 
-                    PauseMenuItem(icon: "bolt", title: "Quick Load", color: .cyan) {
+                    PauseMenuItem(icon: "bolt", title: "快速读取", color: .cyan) {
                         viewModel.loadState(slot: 0)
                     }
 
                     PauseMenuItem(
                         icon: viewModel.isFastForwarding ? "forward.fill" : "forward",
-                        title: viewModel.isFastForwarding ? "Normal Speed" : "Fast Forward",
+                        title: viewModel.isFastForwarding ? "正常速度" : "快进",
                         color: .yellow
                     ) {
                         viewModel.toggleFastForward()
@@ -71,7 +71,7 @@ struct PauseMenuView: View {
                         .background(Color.white.opacity(0.2))
                         .padding(.vertical, 4)
 
-                    PauseMenuItem(icon: "xmark.circle", title: "Quit to Library", color: .red) {
+                    PauseMenuItem(icon: "xmark.circle", title: "返回游戏库", color: .red) {
                         onQuit()
                     }
                 }
@@ -156,11 +156,11 @@ struct SaveStateGridView: View {
                 }
                 .padding()
             }
-            .navigationTitle(mode == .save ? "Save State" : "Load State")
+            .navigationTitle(mode == .save ? "保存状态" : "读取状态")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { onDismiss() }
+                    Button("完成") { onDismiss() }
                 }
             }
         }
@@ -193,7 +193,7 @@ struct SaveStateCell: View {
                             Image(systemName: state.exists ? "photo" : "plus")
                                 .font(.title3)
                                 .foregroundColor(.secondary)
-                            Text(state.exists ? "Slot \(state.slot)" : "Empty")
+                            Text(state.exists ? "存档位 \(state.slot + 1)" : "空存档位")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
@@ -218,7 +218,7 @@ struct SaveStateCell: View {
 
                 // Info
                 VStack(spacing: 2) {
-                    Text("Slot \(state.slot)")
+                    Text("存档位 \(state.slot + 1)")
                         .font(.caption)
                         .fontWeight(.medium)
 

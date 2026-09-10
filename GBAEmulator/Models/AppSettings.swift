@@ -10,9 +10,9 @@ enum ScalingMode: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .fit: return "Fit (Letterbox)"
-        case .fill: return "Fill Screen"
-        case .integer: return "Integer Scale"
+        case .fit: return "适应屏幕（留黑边）"
+        case .fill: return "填满屏幕"
+        case .integer: return "整数倍缩放"
         }
     }
 }
@@ -26,8 +26,8 @@ enum ScreenFilter: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .nearest: return "Sharp (Nearest)"
-        case .bilinear: return "Smooth (Bilinear)"
+        case .nearest: return "清晰（最近邻）"
+        case .bilinear: return "平滑（双线性）"
         }
     }
 }
@@ -43,10 +43,10 @@ enum HapticStrength: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .off: return "Off"
-        case .light: return "Light"
-        case .medium: return "Medium"
-        case .heavy: return "Heavy"
+        case .off: return "关闭"
+        case .light: return "轻"
+        case .medium: return "中"
+        case .heavy: return "强"
         }
     }
 }
@@ -54,18 +54,17 @@ enum HapticStrength: String, CaseIterable, Identifiable {
 // MARK: - Fast Forward Speed
 enum FastForwardSpeed: Double, CaseIterable, Identifiable {
     case x2 = 2.0
+    case x3 = 3.0
     case x4 = 4.0
+    case x5 = 5.0
+    case x6 = 6.0
+    case x7 = 7.0
     case x8 = 8.0
+    case x9 = 9.0
+    case x10 = 10.0
 
     var id: Double { rawValue }
-
-    var displayName: String {
-        switch self {
-        case .x2: return "2x"
-        case .x4: return "4x"
-        case .x8: return "8x"
-        }
-    }
+    var displayName: String { "\(Int(rawValue)) 倍" }
 }
 
 // MARK: - App Settings Keys

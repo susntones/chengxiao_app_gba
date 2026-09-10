@@ -5,12 +5,12 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>GBA Emulator</string>
+	<string>GBA 模拟器</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>GBA ROM</string>
+			<string>GBA 游戏文件</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
@@ -18,8 +18,6 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.gbaemulator.gba</string>
-				<string>com.gbaemulator.gbc</string>
-				<string>com.gbaemulator.gb</string>
 			</array>
 		</dict>
 	</array>
@@ -83,7 +81,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Game Boy Advance ROM</string>
+			<string>Game Boy Advance 游戏文件</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.gbaemulator.gba</string>
 			<key>UTTypeTagSpecification</key>
@@ -91,40 +89,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>gba</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Game Boy Color ROM</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.gbaemulator.gbc</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>gbc</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Game Boy ROM</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.gbaemulator.gb</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>gb</string>
 				</array>
 			</dict>
 		</dict>

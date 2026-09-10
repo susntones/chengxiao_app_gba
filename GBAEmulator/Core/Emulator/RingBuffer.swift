@@ -12,6 +12,7 @@ final class RingBuffer: @unchecked Sendable {
     private let lock = NSLock()
 
     init(capacity: Int) {
+        precondition(capacity > 1)
         self.capacity = capacity
         self.buffer = UnsafeMutablePointer<Int16>.allocate(capacity: capacity * 2) // stereo
         self.buffer.initialize(repeating: 0, count: capacity * 2)
@@ -41,7 +42,7 @@ final class RingBuffer: @unchecked Sendable {
         defer { lock.unlock() }
 
         let space = capacity - (writeIndex - readIndex + capacity) % capacity - 1
-        let framesToWrite = min(count, space)
+        let framesToWrite = min(count, space, samples.count / 2)
 
         if framesToWrite <= 0 { return 0 }
 
@@ -74,6 +75,25 @@ final class RingBuffer: @unchecked Sendable {
 
         readIndex = (readIndex + framesToRead) % capacity
         return framesToRead
+    }
+
+    /// Convert directly into AVAudioEngine's planar Float32 format, without allocation.
+    func read(left: UnsafeMutablePointer<Float>, right: UnsafeMutablePointer<Float>, frames: Int) {
+        lock.lock()
+        defer { lock.unlock() }
+        let available = (writeIndex - readIndex + capacity) % capacity
+        let count = min(max(0, frames), available)
+        for i in 0..<max(0, frames) {
+            if i < count {
+                let position = (readIndex + i) % capacity
+                left[i] = Float(buffer[position * 2]) / 32768
+                right[i] = Float(buffer[position * 2 + 1]) / 32768
+            } else {
+                left[i] = 0
+                right[i] = 0
+            }
+        }
+        readIndex = (readIndex + count) % capacity
     }
 
     /// Clear all buffered audio

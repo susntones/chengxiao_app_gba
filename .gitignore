@@ -13,6 +13,7 @@ build/
 
 # mGBA build artifacts
 GBAEmulator/mGBA/build-ios/
+GBAEmulator/mGBA/build-*/
 GBAEmulator/mGBA/mgba-src/
 GBAEmulator/mGBA/lib/
 GBAEmulator/mGBA/include/mgba*/

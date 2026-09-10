@@ -130,7 +130,7 @@ enum StorageService {
 
     // MARK: - Supported Extensions
 
-    static let supportedExtensions: Set<String> = ["gba", "gbc", "gb", "zip"]
+    static let supportedExtensions: Set<String> = ["gba"]
 
     static func isSupported(url: URL) -> Bool {
         supportedExtensions.contains(url.pathExtension.lowercased())

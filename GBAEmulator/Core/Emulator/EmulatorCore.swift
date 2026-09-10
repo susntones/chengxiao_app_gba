@@ -77,13 +77,23 @@ final class EmulatorCore: ObservableObject {
     }
 
     deinit {
-        // Signal emulation thread to stop; full teardown happens via stop()
         atomicIsRunning.value = false
+        if let thread = emulationThread {
+            thread.cancel()
+            threadExitSemaphore.wait()
+        }
+        if let context { emulator_destroy(context) }
+    }
+
+    /// Only the worker accesses this pointer until its exit semaphore is signalled.
+    private struct WorkerContext: @unchecked Sendable {
+        let pointer: OpaquePointer
     }
 
     // MARK: - Lifecycle
 
     func loadROM(at url: URL) throws {
+        stop()
         state = .loading
 
         // Create emulator context
@@ -95,7 +105,6 @@ final class EmulatorCore: ObservableObject {
 
         // Set save path
         let savePath = StorageService.saveFilePath(for: url.lastPathComponent)
-        emulator_set_save_path(ctx, savePath.path)
 
         // Load ROM
         guard emulator_load_rom(ctx, url.path) else {
@@ -104,6 +113,8 @@ final class EmulatorCore: ObservableObject {
             state = .stopped
             throw EmulatorError.failedToLoadROM(url.lastPathComponent)
         }
+
+        emulator_set_save_path(ctx, savePath.path)
 
         // Set audio sample rate to device rate
         let sampleRate = audioEngine.sampleRate
@@ -125,10 +136,18 @@ final class EmulatorCore: ObservableObject {
         // Start audio engine
         audioEngine.start()
 
-        // Start emulation thread, passing OpaquePointer (EmulatorContext*) directly
-        emulationThread = Thread { [weak self] in
-            self?.emulationLoop(ctx: ctx)
-            self?.threadExitSemaphore.signal()
+        let worker = WorkerContext(pointer: ctx)
+        let running = atomicIsRunning
+        let speed = atomicSpeed
+        let input = inputManager
+        let audio = audioEngine
+        let video = videoRenderer
+        let exited = threadExitSemaphore
+        // Do not retain the MainActor owner for the lifetime of the worker.
+        emulationThread = Thread {
+            defer { exited.signal() }
+            Self.emulationLoop(worker: worker, running: running, speed: speed,
+                               input: input, audio: audio, video: video)
         }
         emulationThread?.name = "com.gbaemulator.emulation"
         emulationThread?.qualityOfService = .userInteractive
@@ -138,11 +157,9 @@ final class EmulatorCore: ObservableObject {
     func pause() {
         guard state == .running else { return }
         atomicIsRunning.value = false
+        joinEmulationThread()
         state = .paused
         audioEngine.pause()
-
-        // Wait for emulation thread to exit (max 100ms)
-        _ = threadExitSemaphore.wait(timeout: .now() + 0.1)
     }
 
     func resume() {
@@ -155,15 +172,20 @@ final class EmulatorCore: ObservableObject {
         state = .stopped
         audioEngine.stop()
 
-        // Wait for emulation thread to fully exit before destroying context
-        emulationThread?.cancel()
-        _ = threadExitSemaphore.wait(timeout: .now() + 0.5)
-        emulationThread = nil
+        // Never destroy a context until its worker has acknowledged exit.
+        joinEmulationThread()
 
         if let ctx = context {
             emulator_destroy(ctx)
             context = nil
         }
+    }
+
+    private func joinEmulationThread() {
+        guard let thread = emulationThread else { return }
+        thread.cancel()
+        threadExitSemaphore.wait()
+        emulationThread = nil
     }
 
     // MARK: - Speed Control
@@ -188,13 +210,23 @@ final class EmulatorCore: ObservableObject {
     // MARK: - Save States
 
     func saveState(to path: String) -> Bool {
+        let wasRunning = state == .running
+        if wasRunning { pause() }
+        defer { if wasRunning { resume() } }
         guard let ctx = context else { return false }
         return emulator_save_state_to_file(ctx, path)
     }
 
     func loadState(from path: String) -> Bool {
+        let wasRunning = state == .running
+        if wasRunning { pause() }
+        defer { if wasRunning { resume() } }
         guard let ctx = context else { return false }
-        return emulator_load_state_from_file(ctx, path)
+        let loaded = emulator_load_state_from_file(ctx, path)
+        if loaded, let buffer = emulator_get_video_buffer(ctx) {
+            videoRenderer.updateFrame(buffer: buffer)
+        }
+        return loaded
     }
 
     // MARK: - Game Info
@@ -208,6 +240,9 @@ final class EmulatorCore: ObservableObject {
     // MARK: - Screenshot
 
     func captureScreenshot() -> Data? {
+        let wasRunning = state == .running
+        if wasRunning { pause() }
+        defer { if wasRunning { resume() } }
         guard let ctx = context else { return nil }
         guard let buffer = emulator_get_video_buffer(ctx) else { return nil }
 
@@ -251,14 +286,19 @@ final class EmulatorCore: ObservableObject {
 
     /// OpaquePointer maps to EmulatorContext* — safe to capture across threads since
     /// the context lifetime is managed by atomicIsRunning + threadExitSemaphore.
-    private func emulationLoop(ctx: OpaquePointer) {
-        let frameTime = targetFrameTime
+    nonisolated private static func emulationLoop(
+        worker: WorkerContext, running: AtomicBool, speed: AtomicDouble,
+        input: InputManager, audio: AudioEngine, video: VideoRenderer
+    ) {
+        let ctx = worker.pointer
+        let frameTime = 1.0 / 59.7275
+        var audioBuffer = [Int16](repeating: 0, count: 4096 * 2)
 
-        while atomicIsRunning.value && !Thread.current.isCancelled {
+        while running.value && !Thread.current.isCancelled {
             let startTime = CACurrentMediaTime()
 
             // Poll input
-            let keys = inputManager.pollInput()
+            let keys = input.pollInput()
             emulator_set_keys(ctx, keys)
 
             // Run one frame
@@ -266,26 +306,38 @@ final class EmulatorCore: ObservableObject {
 
             // Get video buffer and notify renderer (copies buffer internally)
             if let videoBuffer = emulator_get_video_buffer(ctx) {
-                videoRenderer.updateFrame(buffer: videoBuffer)
+                video.updateFrame(buffer: videoBuffer)
             }
 
             // Drain audio samples every frame to avoid blip_buf overflow
             let samplesAvailable = Int(emulator_get_audio_samples_available(ctx))
             if samplesAvailable > 0 {
-                var audioBuffer = [Int16](repeating: 0, count: samplesAvailable * 2)
-                let samplesRead = emulator_read_audio(ctx, &audioBuffer, Int32(samplesAvailable))
+                let samplesRead = emulator_read_audio(ctx, &audioBuffer, Int32(min(samplesAvailable, 4096)))
                 if samplesRead > 0 {
-                    audioEngine.writeSamples(audioBuffer, count: Int(samplesRead))
+                    audio.writeSamples(audioBuffer, count: Int(samplesRead))
                 }
             }
 
             // Frame timing — sleep to maintain target FPS
-            let currentSpeed = atomicSpeed.value
+            let currentSpeed = min(10.0, max(1.0, speed.value))
             let adjustedFrameTime = frameTime / currentSpeed
             let elapsed = CACurrentMediaTime() - startTime
             let sleepTime = adjustedFrameTime - elapsed
             if sleepTime > 0 {
-                Thread.sleep(forTimeInterval: sleepTime)
+                // Thread.sleep has sub-millisecond overshoot on iOS. Sleep for the
+                // coarse portion, then spin only the final 0.5 ms so 2–10x targets
+                // remain accurate without adding a full timer quantum per frame.
+                // Foundation timers consistently overshoot by about 1 ms on
+                // iOS/macOS. Reserve the final interval for a bounded spin; the
+                // slightly larger reserve at 2x avoids timer quantization there.
+                let spinReserve = currentSpeed <= 2.0 ? 0.0015 : 0.001
+                if sleepTime > spinReserve {
+                    Thread.sleep(forTimeInterval: sleepTime - spinReserve)
+                }
+                while running.value && !Thread.current.isCancelled &&
+                        CACurrentMediaTime() - startTime < adjustedFrameTime {
+                    // Intentionally empty: bounded to at most 0.5 ms.
+                }
             }
         }
     }
@@ -302,13 +354,13 @@ enum EmulatorError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedToInitialize:
-            return "Failed to initialize the emulator core"
+            return "模拟器核心初始化失败"
         case .failedToLoadROM(let name):
-            return "Failed to load ROM: \(name)"
+            return "无法载入游戏：\(name)"
         case .failedToSaveState:
-            return "Failed to save state"
+            return "保存状态失败"
         case .failedToLoadState:
-            return "Failed to load state"
+            return "读取状态失败"
         }
     }
 }

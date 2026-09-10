@@ -21,10 +21,13 @@ struct GamePlayView: View {
             MetalView(renderer: viewModel.videoRenderer)
                 .aspectRatio(240.0 / 160.0, contentMode: .fit)
 
-            // Controller overlay (when no external controller)
-            if !viewModel.inputManager.isControllerConnected {
-                ControllerOverlay(inputManager: viewModel.inputManager)
-            }
+            // Keep touch controls mounted for the entire gameplay session. On iOS,
+            // GameController may transiently report the software keyboard or another
+            // input source as a controller after tapping an overlay button. Removing
+            // this view then destroys every button's gesture state and makes the
+            // controls appear to vanish after fast-forward/pause.
+            ControllerOverlay(inputManager: viewModel.inputManager)
+                .allowsHitTesting(!viewModel.isPaused)
 
             // Fast forward indicator
             if viewModel.isFastForwarding {
@@ -44,41 +47,49 @@ struct GamePlayView: View {
             }
 
             // Pause button (top-right corner)
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
-                        viewModel.pause()
-                    } label: {
-                        Image(systemName: "pause.circle.fill")
-                            .font(.title2)
-                            .foregroundColor(.white.opacity(0.7))
-                            .padding(8)
-                            .background(Circle().fill(Color.black.opacity(0.3)))
+            if !viewModel.isPaused {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button {
+                            viewModel.pause()
+                        } label: {
+                            Image(systemName: "pause.circle.fill")
+                                .font(.title2)
+                                .foregroundColor(.white.opacity(0.7))
+                                .padding(8)
+                                .background(Circle().fill(Color.black.opacity(0.3)))
+                        }
+                        .accessibilityLabel("暂停")
+                        .accessibilityIdentifier("pauseButton")
+                        .padding(.trailing, 16)
+                        .padding(.top, 8)
                     }
-                    .padding(.trailing, 16)
-                    .padding(.top, 8)
+                    Spacer()
                 }
-                Spacer()
             }
 
             // Fast forward button (top-left corner)
-            VStack {
-                HStack {
-                    Button {
-                        viewModel.toggleFastForward()
-                    } label: {
-                        Image(systemName: viewModel.isFastForwarding ? "forward.fill" : "forward")
-                            .font(.title3)
-                            .foregroundColor(viewModel.isFastForwarding ? .yellow : .white.opacity(0.7))
-                            .padding(8)
-                            .background(Circle().fill(Color.black.opacity(0.3)))
+            if !viewModel.isPaused {
+                VStack {
+                    HStack {
+                        Button {
+                            viewModel.toggleFastForward()
+                        } label: {
+                            Image(systemName: viewModel.isFastForwarding ? "forward.fill" : "forward")
+                                .font(.title3)
+                                .foregroundColor(viewModel.isFastForwarding ? .yellow : .white.opacity(0.7))
+                                .padding(8)
+                                .background(Circle().fill(Color.black.opacity(0.3)))
+                        }
+                        .accessibilityLabel(viewModel.isFastForwarding ? "关闭快进" : "开启快进")
+                        .accessibilityIdentifier("fastForwardButton")
+                        .padding(.leading, 16)
+                        .padding(.top, 8)
+                        Spacer()
                     }
-                    .padding(.leading, 16)
-                    .padding(.top, 8)
                     Spacer()
                 }
-                Spacer()
             }
         }
         .ignoresSafeArea()
@@ -86,6 +97,15 @@ struct GamePlayView: View {
         .persistentSystemOverlays(.hidden)
         .onAppear {
             viewModel.startGame()
+        }
+        .onDisappear { viewModel.stop() }
+        .alert("无法运行游戏", isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        )) {
+            Button("返回游戏库") { dismiss() }
+        } message: {
+            Text(viewModel.errorMessage ?? "")
         }
         .onChange(of: scenePhase) { _, newPhase in
             switch newPhase {
@@ -108,6 +128,7 @@ struct GamePlayView: View {
 @MainActor
 final class GamePlayViewModel: ObservableObject {
     // MARK: - Published State
+    @Published var errorMessage: String?
     @Published var isPaused = false
     @Published var isFastForwarding = false
     @Published var speedMultiplier: Double = 1.0
@@ -148,6 +169,7 @@ final class GamePlayViewModel: ObservableObject {
     // MARK: - Game Lifecycle
 
     func startGame() {
+        guard emulatorCore.state == .stopped else { return }
         do {
             try emulatorCore.loadROM(at: game.romURL)
 
@@ -162,12 +184,13 @@ final class GamePlayViewModel: ObservableObject {
             emulatorCore.start()
             playStartTime = Date()
         } catch {
-            print("Failed to start game: \(error)")
+            errorMessage = error.localizedDescription
         }
     }
 
     func pause() {
         guard !isPaused else { return }
+        inputManager.releaseAllTouchButtons()
         isPaused = true
         emulatorCore.pause()
         updatePlayTime()
@@ -180,6 +203,8 @@ final class GamePlayViewModel: ObservableObject {
     }
 
     func stop() {
+        guard emulatorCore.state != .stopped else { return }
+        pause()
         autoSave()
         emulatorCore.stop()
         updatePlayTime()
@@ -248,8 +273,8 @@ final class GamePlayViewModel: ObservableObject {
     }
 
     func autoSaveAndPause() {
-        autoSave()
         pause()
+        autoSave()
     }
 
     // MARK: - Save State Info

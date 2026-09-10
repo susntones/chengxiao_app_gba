@@ -54,32 +54,32 @@ final class InputManager: ObservableObject, @unchecked Sendable {
     // MARK: - Touch Input (called from main thread)
 
     func setTouchButtons(_ buttons: GBAButton) {
-        lock.lock()
-        touchButtons = buttons
-        lock.unlock()
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.activeButtons = self.touchButtons.union(self.controllerButtons)
-        }
+        updateTouchButtons { $0 = buttons }
     }
 
     func pressTouchButton(_ button: GBAButton) {
-        lock.lock()
-        touchButtons.insert(button)
-        lock.unlock()
+        updateTouchButtons { $0.insert(button) }
     }
 
     func releaseTouchButton(_ button: GBAButton) {
-        lock.lock()
-        touchButtons.remove(button)
-        lock.unlock()
+        updateTouchButtons { $0.remove(button) }
     }
 
     func releaseAllTouchButtons() {
+        updateTouchButtons { $0 = .none }
+    }
+
+    /// Update both the emulation-thread state and the observable UI state atomically.
+    private func updateTouchButtons(_ update: (inout GBAButton) -> Void) {
         lock.lock()
-        touchButtons = .none
+        update(&touchButtons)
+        let combined = touchButtons.union(controllerButtons)
         lock.unlock()
+        if Thread.isMainThread {
+            activeButtons = combined
+        } else {
+            DispatchQueue.main.async { [weak self] in self?.activeButtons = combined }
+        }
     }
 
     // MARK: - Controller Setup

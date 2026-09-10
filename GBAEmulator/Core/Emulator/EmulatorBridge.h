@@ -1,6 +1,7 @@
 #ifndef EmulatorBridge_h
 #define EmulatorBridge_h
 
+#include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -94,7 +95,8 @@ bool emulator_save_state_to_file(EmulatorContext* ctx, const char* path);
 /// Load state from a file. Returns true on success.
 bool emulator_load_state_from_file(EmulatorContext* ctx, const char* path);
 
-/// Get the size needed for a save state buffer
+/// Get the size of a raw core state (no file-format metadata or battery save).
+/// Memory state functions use this fixed-size format; file functions use SAVESTATE_ALL.
 size_t emulator_get_state_size(EmulatorContext* ctx);
 
 /// Save state to a memory buffer. Returns true on success.
@@ -122,7 +124,7 @@ void emulator_set_skip_bios(EmulatorContext* ctx, bool skip);
 /// Get the game title from ROM header (up to 12 chars)
 const char* emulator_get_game_title(EmulatorContext* ctx);
 
-/// Get the game code from ROM header (4 chars)
+/// Get the platform-prefixed game code (e.g. AGB-ABCD, up to 8 chars)
 const char* emulator_get_game_code(EmulatorContext* ctx);
 
 #ifdef __cplusplus

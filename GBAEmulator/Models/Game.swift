@@ -45,9 +45,9 @@ final class Game {
         let hours = Int(totalPlayTime) / 3600
         let minutes = (Int(totalPlayTime) % 3600) / 60
         if hours > 0 {
-            return "\(hours)h \(minutes)m"
+            return "\(hours) 小时 \(minutes) 分钟"
         }
-        return "\(minutes)m"
+        return "\(minutes) 分钟"
     }
 
     var formattedFileSize: String {

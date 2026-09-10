@@ -1,5 +1,6 @@
 name: GBAEmulator
 options:
+  developmentLanguage: zh-Hans
   bundleIdPrefix: com.gbaemulator
   deploymentTarget:
     iOS: "17.0"
@@ -18,7 +19,7 @@ settings:
     HEADER_SEARCH_PATHS:
       - "$(PROJECT_DIR)/GBAEmulator/mGBA/include"
     LIBRARY_SEARCH_PATHS:
-      - "$(PROJECT_DIR)/GBAEmulator/mGBA/lib"
+      - "$(PROJECT_DIR)/GBAEmulator/mGBA/lib/$(PLATFORM_NAME)"
     OTHER_LDFLAGS:
       - "-lmgba"
       - "-lz"
@@ -31,9 +32,8 @@ targets:
     sources:
       - path: GBAEmulator
         excludes:
-          - "mGBA/src/**"
-          - "mGBA/build-ios/**"
-          - "mGBA/mgba-src/**"
+          - "mGBA/**"
+          - "Info.plist"
     resources:
       - path: GBAEmulator/Resources
     settings:
@@ -48,9 +48,9 @@ targets:
     preBuildScripts:
       - name: "Build mGBA"
         script: |
-          if [ ! -f "${PROJECT_DIR}/GBAEmulator/mGBA/lib/libmgba.a" ]; then
+          if [ ! -f "${PROJECT_DIR}/GBAEmulator/mGBA/lib/${PLATFORM_NAME}/libmgba.a" ]; then
             echo "Building mGBA..."
-            sh "${PROJECT_DIR}/GBAEmulator/mGBA/build-ios.sh"
+            bash "${PROJECT_DIR}/GBAEmulator/mGBA/build-ios.sh"
           fi
         basedOnDependencyAnalysis: false
 
@@ -64,14 +64,4 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.gbaemulator.tests
-
-  GBAEmulatorUITests:
-    type: bundle.ui-testing
-    platform: iOS
-    sources:
-      - path: GBAEmulatorUITests
-    dependencies:
-      - target: GBAEmulator
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.gbaemulator.uitests
+        GENERATE_INFOPLIST_FILE: YES
