@@ -6,6 +6,7 @@ struct PauseMenuView: View {
     let onResume: () -> Void
     let onQuit: () -> Void
 
+    @State private var showingCheats = false
     @State private var showingSaveStates = false
     @State private var saveStateMode: SaveStateMode = .save
 
@@ -14,6 +15,7 @@ struct PauseMenuView: View {
     }
 
     var body: some View {
+        GeometryReader { geometry in
         ZStack {
             // Dimmed background
             Color.black.opacity(0.6)
@@ -21,6 +23,7 @@ struct PauseMenuView: View {
                 .onTapGesture { onResume() }
 
             // Menu card
+            ScrollView {
             VStack(spacing: 0) {
                 // Header
                 Text("已暂停")
@@ -38,6 +41,11 @@ struct PauseMenuView: View {
                     PauseMenuItem(icon: "play.fill", title: "继续游戏", color: .green) {
                         onResume()
                     }
+
+                    PauseMenuItem(icon: "wand.and.stars", title: "Cheat List（金手指）", color: .purple) {
+                        showingCheats = true
+                    }
+                    .accessibilityIdentifier("cheatListButton")
 
                     PauseMenuItem(icon: "square.and.arrow.down", title: "保存状态", color: .blue) {
                         saveStateMode = .save
@@ -77,13 +85,19 @@ struct PauseMenuView: View {
                 }
                 .padding(.vertical, 8)
             }
+            }
             .frame(width: 280)
+            .frame(maxHeight: min(580, geometry.size.height - 32))
             .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(.ultraThinMaterial)
                     .shadow(radius: 20)
             )
             .clipShape(RoundedRectangle(cornerRadius: 16))
+        }
+        }
+        .sheet(isPresented: $showingCheats) {
+            CheatListView(viewModel: viewModel)
         }
         .sheet(isPresented: $showingSaveStates) {
             SaveStateGridView(

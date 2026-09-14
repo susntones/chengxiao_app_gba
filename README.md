@@ -14,6 +14,7 @@ A native iOS Game Boy Advance emulator built with **SwiftUI** and **mGBA** core,
 - **On-Screen Controls** — D-pad, A/B/L/R/Start/Select with haptic feedback
 - **External Controllers** — MFi, PS4/PS5, Xbox controller support
 - **Fast Forward** — 2x–10x speed with one-tap toggle
+- **Cheat List（金手指）** — Pause-menu list with add/edit, enable/disable and delete; per-game persistence
 - **Metal Rendering** — 60fps GPU-accelerated display with scaling filters
 - **Low-Latency Audio** — AVAudioEngine with ring buffer audio pipeline
 
@@ -71,6 +72,12 @@ Select your personal development team, change `com.gbaemulator.app` in `project.
 3. **Pause**: Tap the pause button (top-right) for save states, fast forward, etc.
 4. **Save/Load**: Use the pause menu to manage save states
 5. **Fast Forward**: Tap the speed button (top-left) or use pause menu
+
+### Cheat List（金手指）
+
+暂停游戏 → **Cheat List（金手指）** → `+`，填写名称、代码格式和代码。同组多行代码请一起添加，每行一条。支持自动识别、GameShark、Action Replay、CodeBreaker 和原始 VBA（如 `02000000:01`）。点击名称编辑，开关启停，左滑或长按删除；关闭列表仍保持暂停。
+
+列表按 ROM 文件名保存在 `Documents/Cheats/<ROM文件名>.json`，重开游戏自动恢复。读取即时存档不会覆盖当前列表；删除游戏会清理对应列表。无效代码或保存失败会提示错误，不提交列表修改。金手指必须匹配游戏版本，关闭或删除不会撤销已写入的游戏数据，请先备份存档。
 
 ## Project Structure
 

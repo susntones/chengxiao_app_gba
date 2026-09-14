@@ -4,7 +4,7 @@ import Testing
 
 /// Original tiny ARM program generated at test time; no commercial ROM or BIOS.
 struct EmulatorBridgeTests {
-    private func fixture() -> Data {
+    func fixture() -> Data {
         var bytes = [UInt8](repeating: 0, count: 1024)
         func word(_ value: UInt32, at offset: Int) {
             for i in 0..<4 { bytes[offset + i] = UInt8(truncatingIfNeeded: value >> (i * 8)) }
@@ -70,6 +70,57 @@ struct EmulatorBridgeTests {
         #expect(emulator_load_rom(ctx, rom.path))
         emulator_set_save_path(ctx, save.path)
         emulator_run_frame(ctx)
+    }
+
+    @Test func cheatListAppliesAtomicallyAndCanBeDisabledOrRemoved() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let rom = directory.appendingPathComponent("cheats.gba")
+        try fixture().write(to: rom)
+        let ctx = try #require(emulator_create())
+        defer { emulator_destroy(ctx) }
+        #expect(emulator_load_rom(ctx, rom.path))
+        for _ in 0..<3 { emulator_run_frame(ctx) }
+
+        func replace(_ codes: [String], enabled: [Bool]) -> Bool {
+            let strings = codes.map { strdup($0)! }
+            defer { strings.forEach { free($0) } }
+            let entries = strings.enumerated().map { index, string in
+                EmulatorCheat(code: UnsafePointer(string), type: 4, enabled: enabled[index])
+            }
+            return entries.withUnsafeBufferPointer { emulator_replace_cheats(ctx, $0.baseAddress, $0.count) }
+        }
+        func pixel() throws -> UInt32 {
+            for _ in 0..<3 { emulator_run_frame(ctx) }
+            return try #require(emulator_get_video_buffer(ctx))[0] & 0xFFFFFF
+        }
+        let red = "06000000:001F"
+        let green = "06000000:03E0\n06000002:7C00"
+        #expect(replace([red, green], enabled: [true, true]))
+        #expect(try pixel() == 0x00FF00)
+        let state = directory.appendingPathComponent("cheats.state")
+        #expect(emulator_save_state_to_file(ctx, state.path))
+        #expect(replace([red, green], enabled: [true, false]))
+        #expect(emulator_load_state_from_file(ctx, state.path))
+        #expect(try pixel() == 0x0000FF) // Loading a state must not restore old enabled cheats.
+        #expect(replace([red, green], enabled: [true, true]))
+        #expect(!replace([red, "06000000:7C00\nINVALID"], enabled: [true, true]))
+        #expect(try pixel() == 0x00FF00) // No partial commit of invalid list.
+        #expect(!replace([" \n\t"], enabled: [true]))
+        #expect(replace([red, green], enabled: [true, false]))
+        #expect(try pixel() == 0x0000FF)
+        #expect(replace([red, green], enabled: [true, true]))
+        #expect(try pixel() == 0x00FF00)
+        #expect(replace([red], enabled: [true]))
+        #expect(try pixel() == 0x0000FF)
+        #expect(replace([], enabled: []))
+        emulator_reset(ctx)
+        #expect(try pixel() == 0x0000FF)
+        emulator_close_rom(ctx)
+        #expect(!replace([red], enabled: [true]))
+        #expect(emulator_load_rom(ctx, rom.path))
+        #expect(try pixel() == 0x0000FF)
     }
 
     @Test func invalidROMDoesNotPoisonContext() throws {

@@ -26,6 +26,11 @@ enum StorageService {
 
     // MARK: - Game-Specific Paths
 
+    static func cheatFilePath(for romFileName: String) -> URL {
+        documentsDirectory.appendingPathComponent("Cheats", isDirectory: true)
+            .appendingPathComponent(romFileName + ".json")
+    }
+
     static func saveFilePath(for romFileName: String) -> URL {
         let baseName = (romFileName as NSString).deletingPathExtension
         return savesDirectory.appendingPathComponent("\(baseName).sav")
@@ -118,6 +123,8 @@ enum StorageService {
         // Delete ROM
         let romURL = romsDirectory.appendingPathComponent(romFileName)
         try? fileManager.removeItem(at: romURL)
+
+        try? fileManager.removeItem(at: cheatFilePath(for: romFileName))
 
         // Delete save file
         let saveURL = saveFilePath(for: romFileName)

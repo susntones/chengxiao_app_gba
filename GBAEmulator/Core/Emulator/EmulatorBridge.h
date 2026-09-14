@@ -96,7 +96,7 @@ bool emulator_save_state_to_file(EmulatorContext* ctx, const char* path);
 bool emulator_load_state_from_file(EmulatorContext* ctx, const char* path);
 
 /// Get the size of a raw core state (no file-format metadata or battery save).
-/// Memory state functions use this fixed-size format; file functions use SAVESTATE_ALL.
+/// Memory state functions use this fixed-size format; file functions exclude cheat lists.
 size_t emulator_get_state_size(EmulatorContext* ctx);
 
 /// Save state to a memory buffer. Returns true on success.
@@ -107,7 +107,16 @@ bool emulator_load_state_from_buffer(EmulatorContext* ctx, const void* buffer, s
 
 // MARK: - Cheats
 
-/// Add a GameShark cheat code. Returns true on success.
+typedef struct {
+    const char* code; // Newline-separated lines belonging to one cheat set
+    int type; // 0 auto, 1 CodeBreaker, 2 GameShark, 3 Action Replay, 4 raw VBA
+    bool enabled;
+} EmulatorCheat;
+
+/// Atomically replace the list after parsing all entries. Caller must pause emulation.
+bool emulator_replace_cheats(EmulatorContext* ctx, const EmulatorCheat* cheats, size_t count);
+
+/// Add an auto-detected cheat code. Returns true on success.
 bool emulator_add_cheat(EmulatorContext* ctx, const char* code);
 
 /// Remove all cheat codes

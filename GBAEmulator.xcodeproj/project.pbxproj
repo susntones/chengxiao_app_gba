@@ -15,10 +15,13 @@
 		2B29160C42204AC18562847B /* SaveStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240F46857BA36244B16C3E20 /* SaveStateManager.swift */; };
 		339E00BE2EE81C5E76B0B27B /* VideoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64015C67DC2BFBA600E21AEF /* VideoRenderer.swift */; };
 		416CAD9B3AA78B666FEB6009 /* EmulatorCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7507FB52741FB7699B3B488C /* EmulatorCore.swift */; };
+		46A627C56380593471F84783 /* CheatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA4E3AD7F69887154FF8862 /* CheatTests.swift */; };
 		49ED105BD922C58366663EA8 /* ControllerOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0071B562C74CC4A4F1FB5653 /* ControllerOverlay.swift */; };
+		56B497E24A23AC4890E05AB3 /* CheatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE59156CDED0475C94059999 /* CheatListView.swift */; };
 		585350A4E491DD7FA483BE30 /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D72229068990A29EACE8B2 /* RingBuffer.swift */; };
 		58CCF00289BBF8E7A6DFA5A7 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5064C4522776A25D7908184C /* StorageService.swift */; };
 		695F8B51A49A12B08F854096 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C348B570AC1989E16FF2F1C6 /* SettingsView.swift */; };
+		6F21E080FA149606E9D455C5 /* CheatLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C78C439AFCC3E5521DDD2E /* CheatLifecycleTests.swift */; };
 		737208D13BB058B532EAA415 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD44FAEBFB80C16DD130B71 /* LibraryView.swift */; };
 		83A917CA92E3A12AAFC20E6B /* GamePlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE106A6CC0247209706D2765 /* GamePlayView.swift */; };
 		90CF8CB5695A86D85A199424 /* EmulatorBridgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCEE9F21B8012A1F1FF5EEE /* EmulatorBridgeTests.swift */; };
@@ -29,6 +32,7 @@
 		A9FB3CE969B084F0FFCDC6ED /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6E977C1EC3049DB6EBAB9 /* AudioEngine.swift */; };
 		AAC0E7A377959DD5F0DEF94E /* EmulatorBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 9C0FB7DB8EE8B6A75299C201 /* EmulatorBridge.c */; };
 		B08201FEF302035677B15471 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231CF871F7FBBEA06DC915A6 /* AppSettings.swift */; };
+		BE434F7FB677C93DA3068B96 /* Cheat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DD8123CB1ECBEA0A30A887 /* Cheat.swift */; };
 		E9779A6069D05BB77AFE2EC3 /* RingBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BE26B9C7D04A7DB507BCAB /* RingBufferTests.swift */; };
 		FEA07BC1553394F924D75930 /* FastForwardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855A3B8286E7175191E8ED44 /* FastForwardTests.swift */; };
 /* End PBXBuildFile section */
@@ -54,6 +58,7 @@
 		2E497A05CCBBB5104AE78C89 /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
 		5064C4522776A25D7908184C /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		64015C67DC2BFBA600E21AEF /* VideoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRenderer.swift; sourceTree = "<group>"; };
+		66DD8123CB1ECBEA0A30A887 /* Cheat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cheat.swift; sourceTree = "<group>"; };
 		723033B3424A0CFBA09D7703 /* EmulatorBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorBridge.h; sourceTree = "<group>"; };
 		7507FB52741FB7699B3B488C /* EmulatorCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorCore.swift; sourceTree = "<group>"; };
 		75B22445380C8BE8802062FB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -67,10 +72,13 @@
 		9C0FB7DB8EE8B6A75299C201 /* EmulatorBridge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = EmulatorBridge.c; sourceTree = "<group>"; };
 		9DC6E977C1EC3049DB6EBAB9 /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		ABCEE9F21B8012A1F1FF5EEE /* EmulatorBridgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmulatorBridgeTests.swift; sourceTree = "<group>"; };
+		AE59156CDED0475C94059999 /* CheatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatListView.swift; sourceTree = "<group>"; };
 		B86D3206A70D5CE551FC497E /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		C348B570AC1989E16FF2F1C6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C7C78C439AFCC3E5521DDD2E /* CheatLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatLifecycleTests.swift; sourceTree = "<group>"; };
 		CE106A6CC0247209706D2765 /* GamePlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlayView.swift; sourceTree = "<group>"; };
 		D0D72229068990A29EACE8B2 /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
+		DFA4E3AD7F69887154FF8862 /* CheatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatTests.swift; sourceTree = "<group>"; };
 		EDCA5206006B26B0CEF605C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +114,8 @@
 		32A88F4F96B1303F6439070F /* GBAEmulatorTests */ = {
 			isa = PBXGroup;
 			children = (
+				C7C78C439AFCC3E5521DDD2E /* CheatLifecycleTests.swift */,
+				DFA4E3AD7F69887154FF8862 /* CheatTests.swift */,
 				ABCEE9F21B8012A1F1FF5EEE /* EmulatorBridgeTests.swift */,
 				855A3B8286E7175191E8ED44 /* FastForwardTests.swift */,
 				989753014080CF7B7BF0D68F /* InputManagerTests.swift */,
@@ -147,6 +157,7 @@
 		63776CA2DD352C46A4DC6CA0 /* GamePlay */ = {
 			isa = PBXGroup;
 			children = (
+				AE59156CDED0475C94059999 /* CheatListView.swift */,
 				0071B562C74CC4A4F1FB5653 /* ControllerOverlay.swift */,
 				CE106A6CC0247209706D2765 /* GamePlayView.swift */,
 				8B2C73D12E3B975B46D2D0F9 /* PauseMenuView.swift */,
@@ -191,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				231CF871F7FBBEA06DC915A6 /* AppSettings.swift */,
+				66DD8123CB1ECBEA0A30A887 /* Cheat.swift */,
 				0B03D7811A986AC9BCEA0857 /* Game.swift */,
 			);
 			path = Models;
@@ -338,6 +350,8 @@
 			files = (
 				B08201FEF302035677B15471 /* AppSettings.swift in Sources */,
 				A9FB3CE969B084F0FFCDC6ED /* AudioEngine.swift in Sources */,
+				BE434F7FB677C93DA3068B96 /* Cheat.swift in Sources */,
+				56B497E24A23AC4890E05AB3 /* CheatListView.swift in Sources */,
 				49ED105BD922C58366663EA8 /* ControllerOverlay.swift in Sources */,
 				AAC0E7A377959DD5F0DEF94E /* EmulatorBridge.c in Sources */,
 				416CAD9B3AA78B666FEB6009 /* EmulatorCore.swift in Sources */,
@@ -362,6 +376,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F21E080FA149606E9D455C5 /* CheatLifecycleTests.swift in Sources */,
+				46A627C56380593471F84783 /* CheatTests.swift in Sources */,
 				90CF8CB5695A86D85A199424 /* EmulatorBridgeTests.swift in Sources */,
 				FEA07BC1553394F924D75930 /* FastForwardTests.swift in Sources */,
 				1AF156439F1D494C462B4E3B /* InputManagerTests.swift in Sources */,

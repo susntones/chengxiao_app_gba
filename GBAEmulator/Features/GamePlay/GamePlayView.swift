@@ -129,6 +129,8 @@ struct GamePlayView: View {
 final class GamePlayViewModel: ObservableObject {
     // MARK: - Published State
     @Published var errorMessage: String?
+    @Published private(set) var cheats: [Cheat] = []
+    @Published var cheatError: String?
     @Published var isPaused = false
     @Published var isFastForwarding = false
     @Published var speedMultiplier: Double = 1.0
@@ -181,6 +183,14 @@ final class GamePlayViewModel: ObservableObject {
                 _ = emulatorCore.loadState(from: autoSavePath.path)
             }
 
+            do {
+                let saved = try cheatStore.load().map { try $0.validated() }
+                guard emulatorCore.replaceCheats(saved) else { throw CheatError.invalidCode }
+                cheats = saved
+            } catch {
+                cheatError = "金手指未载入：\(error.localizedDescription)"
+            }
+
             emulatorCore.start()
             playStartTime = Date()
         } catch {
@@ -208,6 +218,25 @@ final class GamePlayViewModel: ObservableObject {
         autoSave()
         emulatorCore.stop()
         updatePlayTime()
+    }
+
+    // MARK: - Cheats
+
+    private var cheatStore: CheatStore {
+        CheatStore(url: StorageService.cheatFilePath(for: game.romURL.lastPathComponent))
+    }
+
+    /// Only commit the UI after both core validation and atomic persistence succeed.
+    func updateCheats(_ proposed: [Cheat]) throws {
+        let validated = try proposed.map { try $0.validated() }
+        guard emulatorCore.replaceCheats(validated) else { throw CheatError.invalidCode }
+        do {
+            try cheatStore.save(validated)
+        } catch {
+            _ = emulatorCore.replaceCheats(cheats)
+            throw error
+        }
+        cheats = validated
     }
 
     // MARK: - Fast Forward

@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 
+// Match the prebuilt core's feature-dependent struct layout (notably USE_DEBUGGERS).
+#include <mgba/flags.h>
 // mGBA headers
 #include <mgba/core/core.h>
 #include <mgba/core/log.h>
@@ -248,7 +250,8 @@ bool emulator_save_state_to_file(EmulatorContext* ctx, const char* path) {
     struct VFile* vf = VFileOpen(path, O_CREAT | O_TRUNC | O_RDWR);
     if (!vf) return false;
 
-    bool success = mCoreSaveStateNamed(ctx->core, vf, SAVESTATE_ALL);
+    // The per-game Cheat List is authoritative, not a historical save-state list.
+    bool success = mCoreSaveStateNamed(ctx->core, vf, SAVESTATE_ALL & ~SAVESTATE_CHEATS);
     vf->close(vf);
     return success;
 }
@@ -259,7 +262,7 @@ bool emulator_load_state_from_file(EmulatorContext* ctx, const char* path) {
     struct VFile* vf = VFileOpen(path, O_RDONLY);
     if (!vf) return false;
 
-    bool success = mCoreLoadStateNamed(ctx->core, vf, SAVESTATE_ALL);
+    bool success = mCoreLoadStateNamed(ctx->core, vf, SAVESTATE_ALL & ~SAVESTATE_CHEATS);
     vf->close(vf);
     return success;
 }
@@ -293,7 +296,7 @@ bool emulator_add_cheat(EmulatorContext* ctx, const char* code) {
     if (!set) return false;
 
     if (!mCheatAddLine(set, code, 0)) {
-        set->deinit(set);
+        mCheatSetDeinit(set);
         return false;
     }
 
@@ -304,7 +307,13 @@ bool emulator_add_cheat(EmulatorContext* ctx, const char* code) {
 
 void emulator_clear_cheats(EmulatorContext* ctx) {
     if (!ctx || !ctx->cheatDevice) return;
-    mCheatDeviceClear(ctx->cheatDevice);
+    while (mCheatSetsSize(&ctx->cheatDevice->cheats)) {
+        struct mCheatSet* set = *mCheatSetsGetPointer(&ctx->cheatDevice->cheats, 0);
+        set->enabled = false;
+        mCheatRefresh(ctx->cheatDevice, set); // Restore ROM patches before freeing.
+        mCheatRemoveSet(ctx->cheatDevice, set); // Remove master-code hooks.
+        mCheatSetDeinit(set);
+    }
 }
 
 void emulator_set_cheat_enabled(EmulatorContext* ctx, int index, bool enabled) {
@@ -317,6 +326,42 @@ void emulator_set_cheat_enabled(EmulatorContext* ctx, int index, bool enabled) {
     if (set) {
         set->enabled = enabled;
     }
+}
+
+bool emulator_replace_cheats(EmulatorContext* ctx, const EmulatorCheat* cheats, size_t count) {
+    if (!ctx || !ctx->core || !ctx->romLoaded || (count && !cheats)) return false;
+    if (!ctx->cheatDevice) ctx->cheatDevice = ctx->core->cheatDevice(ctx->core);
+    if (!ctx->cheatDevice) return false;
+    struct mCheatSet** sets = calloc(count ? count : 1, sizeof(*sets));
+    if (!sets) return false;
+    bool valid = true;
+    for (size_t i = 0; i < count && valid; ++i) {
+        if (!cheats[i].code || cheats[i].type < 0 || cheats[i].type > 4) { valid = false; break; }
+        sets[i] = ctx->cheatDevice->createSet(ctx->cheatDevice, NULL);
+        char* text = strdup(cheats[i].code);
+        if (!sets[i] || !text) { free(text); valid = false; break; }
+        size_t lines = 0;
+        char* state = NULL;
+        for (char* line = strtok_r(text, "\r\n", &state); line; line = strtok_r(NULL, "\r\n", &state)) {
+            while (*line == ' ' || *line == '\t') ++line;
+            size_t length = strlen(line);
+            while (length && (line[length - 1] == ' ' || line[length - 1] == '\t')) line[--length] = 0;
+            if (!length) continue;
+            if (!mCheatAddLine(sets[i], line, cheats[i].type)) { valid = false; break; }
+            ++lines;
+        }
+        free(text);
+        if (!lines) valid = false;
+        sets[i]->enabled = cheats[i].enabled;
+    }
+    if (valid) {
+        emulator_clear_cheats(ctx);
+        for (size_t i = 0; i < count; ++i) mCheatAddSet(ctx->cheatDevice, sets[i]);
+    } else {
+        for (size_t i = 0; i < count; ++i) if (sets[i]) mCheatSetDeinit(sets[i]);
+    }
+    free(sets);
+    return valid;
 }
 
 // MARK: - Configuration

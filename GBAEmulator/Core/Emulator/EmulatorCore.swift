@@ -78,8 +78,7 @@ final class EmulatorCore: ObservableObject {
 
     deinit {
         atomicIsRunning.value = false
-        if let thread = emulationThread {
-            thread.cancel()
+        if emulationThread != nil {
             threadExitSemaphore.wait()
         }
         if let context { emulator_destroy(context) }
@@ -182,8 +181,10 @@ final class EmulatorCore: ObservableObject {
     }
 
     private func joinEmulationThread() {
-        guard let thread = emulationThread else { return }
-        thread.cancel()
+        guard emulationThread != nil else { return }
+        // Do not cancel a Thread that may not have entered its closure yet:
+        // Foundation can skip the closure entirely, including its exit signal.
+        // atomicIsRunning is already false; even a not-yet-started worker exits.
         threadExitSemaphore.wait()
         emulationThread = nil
     }
@@ -227,6 +228,24 @@ final class EmulatorCore: ObservableObject {
             videoRenderer.updateFrame(buffer: buffer)
         }
         return loaded
+    }
+
+    // MARK: - Cheats
+
+    func replaceCheats(_ cheats: [Cheat]) -> Bool {
+        let wasRunning = state == .running
+        if wasRunning { pause() }
+        defer { if wasRunning { resume() } }
+        guard let ctx = context else { return false }
+        let strings = cheats.map { strdup($0.code) }
+        defer { strings.forEach { free($0) } }
+        guard strings.allSatisfy({ $0 != nil }) else { return false }
+        let entries = zip(cheats, strings).map { cheat, string in
+            EmulatorCheat(code: UnsafePointer(string), type: Int32(cheat.format.rawValue), enabled: cheat.isEnabled)
+        }
+        return entries.withUnsafeBufferPointer {
+            emulator_replace_cheats(ctx, $0.baseAddress, $0.count)
+        }
     }
 
     // MARK: - Game Info
